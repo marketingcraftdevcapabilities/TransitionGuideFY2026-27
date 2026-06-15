@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transition Guide FY2026/27 · Marketing Craft Development &amp; Capabilities</title>
+<style>
+  :root{
+    --super-blue:#236CFF; --blueberry:#00254A;
+    --agave-30:#81F2FE; --agave-20:#C2F5FF;
+    --wintermint:#EFF4F9; --tofu:#F4F4EF;
+    --ink:#13294B; --text:#2A3B52; --muted:#647389;
+    --line:#E2E8F0; --line-soft:#EDF1F6;
+    --stop:#FF5C37;  --stop-bg:#FFEAE4;  --stop-text:#B32D13;
+    --tbd:#F9C741;   --tbd-bg:#FFF4CC;   --tbd-text:#8A5A00;
+    --go:#3BD85E;    --go-bg:#E7FDC8;    --go-text:#0B7A38;
+    --done:#236CFF;  --done-bg:#E4EEFF;  --done-text:#1A52C7;
+    --card:#FFFFFF; --radius:16px;
+    --shadow:0 1px 2px rgba(0,37,74,.05), 0 10px 28px rgba(0,37,74,.05);
+    --shadow-sm:0 1px 2px rgba(0,37,74,.06);
+    --font:'Avenir Next','Avenir Next LT Pro','Avenir',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,'SF Mono','SFMono-Regular','Roboto Mono',Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font);color:var(--text);background:var(--wintermint);line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:var(--super-blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1220px;margin:0 auto;padding:0 28px}
+
+  /* header */
+  .topbar{background:var(--super-blue);color:#fff}
+  .topbar .wrap{padding-top:26px;padding-bottom:34px}
+  .lockup-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .lockup-eyebrow{font-size:11px;letter-spacing:.16em;font-weight:700;text-transform:uppercase;opacity:.9}
+  .lockup-title{font-size:18px;font-weight:600;line-height:1.15;margin-top:2px}
+  .pill{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.45);color:#fff}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--agave-30);box-shadow:0 0 0 3px rgba(129,242,254,.25)}
+  .head-main{margin-top:30px}
+  .kicker{font-size:12px;letter-spacing:.18em;font-weight:700;text-transform:uppercase;color:var(--agave-20)}
+  h1.title{font-size:clamp(34px,5vw,54px);line-height:1.02;font-weight:700;margin:8px 0 0;letter-spacing:-.01em}
+  h1.title .yr{color:var(--agave-20);font-weight:500}
+  .subtitle{margin-top:14px;font-size:15px;color:rgba(255,255,255,.9);max-width:780px}
+  .head-meta{margin-top:6px;display:flex;gap:8px 22px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.82)}
+  .head-meta b{color:#fff;font-weight:600}
+
+  main{padding:34px 0 70px}
+  .hero{background:var(--blueberry);color:#fff;border-radius:var(--radius);padding:32px 36px;box-shadow:var(--shadow)}
+  .hero .eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;text-transform:uppercase;color:var(--agave-30)}
+  .hero p{font-size:clamp(18px,2.1vw,23px);line-height:1.5;margin:16px 0 0;font-weight:400;color:#E8EEF6}
+  .hl{color:var(--agave-30);font-weight:700}
+  .hl-go{color:#8BF0A6;font-weight:700}
+  .hl-warn{color:#FFD66B;font-weight:700}
+
+  /* key resources + strategy strips */
+  .strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;align-items:center}
+  .strip .slabel{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+  .strat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+  .strat .sc{background:var(--card);border:1px solid var(--line-soft);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-sm)}
+  .strat .sc .t{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--super-blue)}
+  .strat .sc .d{font-size:13px;color:var(--text);margin-top:5px}
+  .openaction{margin-top:12px;font-size:13.5px;color:var(--text);background:var(--tbd-bg);border-left:4px solid var(--tbd);border-radius:0 10px 10px 0;padding:12px 16px}
+  .openaction b{color:var(--tbd-text)}
+
+  .legend-strip{display:flex;gap:10px 26px;flex-wrap:wrap;margin:24px 2px 0;font-size:13px;color:var(--muted);align-items:center}
+  .legend-strip .li{display:inline-flex;align-items:center;gap:8px}
+  .legend-strip b{color:var(--ink);font-weight:600}
+  .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .sw.stop{background:var(--stop)} .sw.tbd{background:var(--tbd)} .sw.go{background:var(--go)} .sw.done{background:var(--done)}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:22px}
+  .kpi{background:var(--card);border-radius:var(--radius);padding:22px 22px 20px;box-shadow:var(--shadow-sm);border:1px solid var(--line-soft);position:relative;overflow:hidden}
+  .kpi::before{content:"";position:absolute;top:0;left:22px;width:40px;height:4px;border-radius:0 0 4px 4px;background:var(--super-blue)}
+  .kpi .label{font-size:11px;letter-spacing:.1em;font-weight:700;text-transform:uppercase;color:var(--muted);margin-top:8px}
+  .kpi .num{font-size:clamp(40px,4.4vw,52px);font-weight:700;color:var(--blueberry);line-height:1.04;margin-top:8px;letter-spacing:-.02em}
+  .kpi .num.small{font-size:clamp(32px,3.6vw,44px)}
+  .kpi .sub{font-size:13px;color:var(--muted);margin-top:8px}
+  .chip{display:inline-block;font-family:var(--mono);font-size:11.5px;background:var(--wintermint);color:var(--ink);padding:4px 9px;border-radius:6px;margin-top:12px;border:1px solid var(--line)}
+  .ministack{display:flex;height:8px;border-radius:5px;overflow:hidden;margin-top:14px;background:var(--line)}
+  .ministack > i{display:block;height:100%}
+
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:46px 2px 18px;flex-wrap:wrap}
+  .sec-head h2{font-size:22px;font-weight:700;color:var(--ink);margin:0;letter-spacing:-.01em}
+  .sec-head .marker{color:var(--super-blue);font-weight:700;font-family:var(--mono);font-size:14px;margin-right:10px}
+  .sec-head .desc{font-size:13px;color:var(--muted)}
+  .sec-rule{height:2px;background:var(--line);margin:0 2px}
+
+  .insights{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .callout{border-radius:12px;padding:16px 18px;border-left:4px solid;font-size:14px;line-height:1.5}
+  .callout b{font-weight:700}
+  .callout.stop{background:var(--stop-bg);border-color:var(--stop)} .callout.stop b{color:var(--stop-text)}
+  .callout.tbd{background:var(--tbd-bg);border-color:var(--tbd)} .callout.tbd b{color:var(--tbd-text)}
+  .callout.go{background:var(--go-bg);border-color:var(--go)} .callout.go b{color:var(--go-text)}
+  .callout.done{background:var(--done-bg);border-color:var(--done)} .callout.done b{color:var(--done-text)}
+
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin:44px 2px 0;overflow-x:auto}
+  .tab{appearance:none;background:none;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:600;color:var(--muted);padding:12px 14px;border-bottom:2.5px solid transparent;white-space:nowrap;transition:color .15s}
+  .tab:hover{color:var(--ink)}
+  .tab.active{color:var(--super-blue);border-color:var(--super-blue)}
+  .tab:focus-visible{outline:2px solid var(--super-blue);outline-offset:2px;border-radius:6px}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  .panels{margin-top:24px}
+  .pcard{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--line-soft);padding:24px 26px;margin-bottom:20px}
+  .pcard h3{font-size:17px;font-weight:700;color:var(--ink);margin:0 0 2px}
+  .pcard .ptag{font-size:13px;color:var(--muted);margin:0 0 18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .grid2.tight{align-items:start}
+
+  .sowhat{background:#F1F6FF;border-left:4px solid var(--super-blue);border-radius:0 10px 10px 0;padding:13px 16px;font-size:13.5px;color:var(--text);margin-top:18px}
+  .sowhat b{color:var(--super-blue)}
+
+  /* donut */
+  .donut-wrap{display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+  .donut{flex:0 0 196px}
+  .donut svg{width:196px;height:196px;display:block}
+  .donut-center{font-weight:700;fill:var(--blueberry)}
+  .donut svg circle.seg{cursor:pointer;transition:opacity .15s}
+  .donut svg circle.seg:hover{opacity:.78}
+  .dlegend{flex:1;min-width:190px;display:flex;flex-direction:column;gap:9px}
+  .dlegend .row{display:flex;align-items:center;gap:11px;font-size:14px;cursor:pointer;padding:4px 6px;border-radius:8px}
+  .dlegend .row:hover{background:var(--wintermint)}
+  .dlegend .row .nm{flex:1;color:var(--text)}
+  .dlegend .row .ct{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+  .dlegend .row .pc{color:var(--muted);font-size:12.5px;width:42px;text-align:right}
+  .hint{font-size:11.5px;color:var(--muted);margin-top:10px;font-style:italic}
+
+  /* cross-tab */
+  .xtab{width:100%;border-collapse:separate;border-spacing:5px;font-size:13px}
+  .xtab th{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:4px 6px;text-align:center}
+  .xtab th.rowh{text-align:left}
+  .xtab td.rl{font-weight:600;color:var(--ink);white-space:nowrap;padding-right:6px}
+  .xcell{border:none;border-radius:9px;cursor:pointer;padding:9px 6px 7px;text-align:center;background:#F7FAFD;transition:transform .1s, box-shadow .1s;min-width:58px}
+  .xcell:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+  .xcell .c{font-size:19px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+  .xcell.zero{cursor:default;background:#FAFBFD}
+  .xcell.zero .c{color:#C2CCD9}
+  .xcell .mb{height:3px;border-radius:2px;margin:6px auto 0;background:var(--line)}
+  .xcell.stopc{background:var(--stop-bg)} .xcell.tbdc{background:var(--tbd-bg)} .xcell.goc{background:var(--go-bg)} .xcell.donec{background:var(--done-bg)}
+  .xtab td.tot,.xtab th.tot{font-weight:700}
+  .xcell.totc{background:var(--blueberry);cursor:pointer} .xcell.totc .c{color:#fff}
+  .xcell.totc.corner{background:#0A3461}
+  .xtab .totrow td{border-top:2px solid var(--line)}
+
+  /* category stacked bars */
+  .cbars{display:flex;flex-direction:column;gap:18px;margin-top:6px}
+  .cbar .cl{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:7px}
+  .cbar .cl .nm{font-weight:700;color:var(--ink)}
+  .cbar .cl .val{font-variant-numeric:tabular-nums;color:var(--text);font-weight:600}
+  .stack{height:18px;background:var(--line-soft);border-radius:9px;overflow:hidden;display:flex}
+  .stack > i{display:block;height:100%;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+  .seg-leg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-size:12px;color:var(--muted)}
+  .seg-leg span{display:inline-flex;align-items:center;gap:6px}
+  .bar-note{font-size:12px;color:var(--muted);margin-top:14px}
+
+  /* timeline */
+  .tl-scroll{overflow-x:auto;padding-bottom:6px}
+  .timeline{position:relative;min-width:760px;padding:6px 0 0}
+  .tl-line{position:absolute;left:7%;right:7%;top:104px;height:2px;background:var(--line);z-index:0}
+  .tl-track{display:flex;position:relative;z-index:1}
+  .tl-stop{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 6px}
+  .tl-items{min-height:92px;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;margin-bottom:10px;width:100%}
+  .tl-chip{font-size:11px;font-weight:600;padding:3px 7px;border-radius:5px;border:1px solid;display:inline-flex;align-items:center;gap:6px;justify-content:center}
+  .tl-chip .d{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .tl-dot{width:15px;height:15px;border-radius:50%;background:var(--super-blue);border:3px solid #fff;box-shadow:0 0 0 1px var(--line)}
+  .tl-stop.past .tl-dot{background:#AEBACA}
+  .tl-stop.now .tl-dot{background:#fff;border:3px solid var(--super-blue);box-shadow:0 0 0 4px rgba(35,108,255,.18)}
+  .tl-stop.cliff .tl-dot{background:var(--stop);box-shadow:0 0 0 4px rgba(255,92,55,.18)}
+  .tl-date{margin-top:11px;font-weight:700;font-size:13px;color:var(--ink)}
+  .tl-meta{font-size:11.5px;color:var(--muted);margin-top:2px;max-width:140px}
+  .tl-days{font-size:10.5px;font-weight:700;letter-spacing:.03em;margin-top:4px;padding:2px 7px;border-radius:999px;background:var(--wintermint);color:var(--muted)}
+  .tl-stop.now .tl-date{color:var(--super-blue)} .tl-stop.cliff .tl-date{color:var(--stop-text)}
+  .tl-stop.cliff .tl-days{background:var(--stop-bg);color:var(--stop-text)}
+  .tl-stop.soon .tl-days{background:var(--tbd-bg);color:var(--tbd-text)}
+
+  /* tables */
+  table.dt{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.dt thead th{text-align:left;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:0 14px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  table.dt thead th.th-sort{cursor:pointer;user-select:none}
+  table.dt thead th.th-sort:hover{color:var(--ink)}
+  table.dt thead th .ind{font-size:9px;opacity:.4;margin-left:4px}
+  table.dt thead th.asc .ind::after{content:"▲";opacity:1}
+  table.dt thead th.desc .ind::after{content:"▼";opacity:1}
+  table.dt thead th .ind::after{content:"▲▼"}
+  table.dt tbody td{padding:14px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--text)}
+  table.dt tbody tr:last-child td{border-bottom:none}
+  table.dt tbody tr:hover{background:#FAFCFF}
+  td .item-nm{font-weight:600;color:var(--ink)}
+  td .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .table-scroll{overflow-x:auto}
+
+  .badge{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:5px 10px;border-radius:999px;white-space:nowrap}
+  .badge .d{width:7px;height:7px;border-radius:50%}
+  .badge.stop{background:var(--stop-bg);color:var(--stop-text)} .badge.stop .d{background:var(--stop)}
+  .badge.tbd{background:var(--tbd-bg);color:var(--tbd-text)} .badge.tbd .d{background:var(--tbd)}
+  .badge.go{background:var(--go-bg);color:var(--go-text)} .badge.go .d{background:var(--go)}
+  .badge.done{background:var(--done-bg);color:var(--done-text)} .badge.done .d{background:var(--done)}
+  .badge.cat{background:var(--wintermint);color:var(--muted);border:1px solid var(--line)} .badge.cat .d{display:none}
+
+  /* controls */
+  .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+  .fgroup{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .flabel{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .chipbtn{appearance:none;font-family:inherit;cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--text)}
+  .chipbtn:hover{border-color:#C4D2E4}
+  .chipbtn.active{background:var(--blueberry);color:#fff;border-color:var(--blueberry)}
+  .chipbtn:focus-visible{outline:2px solid var(--super-blue);outline-offset:2px}
+  .search{flex:1;min-width:160px;max-width:280px;position:relative}
+  .search input{width:100%;font-family:inherit;font-size:13.5px;padding:8px 12px 8px 32px;border:1px solid var(--line);border-radius:999px;color:var(--text);background:#fff}
+  .search input:focus{outline:none;border-color:var(--super-blue);box-shadow:0 0 0 3px rgba(35,108,255,.12)}
+  .search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--muted)}
+  .count-note{font-size:12.5px;color:var(--muted);margin-left:auto;white-space:nowrap}
+  .empty-row td{text-align:center;color:var(--muted);padding:26px}
+
+  /* resource links + contacts */
+  .res{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px;align-items:center}
+  .res .rlbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-right:2px}
+  .lnk{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:600;color:var(--super-blue);background:#F1F6FF;border:1px solid #DCE7FB;padding:4px 9px;border-radius:6px;text-decoration:none;line-height:1.3}
+  .lnk:hover{background:#E0EBFF;text-decoration:none}
+  .lnk::after{content:"↗";font-size:9px;opacity:.55;margin-left:1px}
+  .lnk.po{color:#6B4E16;background:#FFF7E6;border-color:#F0E2BC}
+  .lnk.po:hover{background:#FCEFC9}
+  .lnk.slack{color:#5A2E72;background:#F6EEFB;border-color:#E7D6F1}
+  .contact{font-size:13px;color:var(--text);margin-top:14px;line-height:1.6}
+  .contact .nm{font-weight:600;color:var(--ink)}
+  .contact .role{color:var(--muted)}
+  .contact a{font-weight:500}
+
+  /* entity cards */
+  .cardgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .ecard{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--line-soft);overflow:hidden;display:flex;flex-direction:column}
+  .ecard .top{height:5px}
+  .ecard .top.stop{background:var(--stop)} .ecard .top.tbd{background:var(--tbd)} .ecard .top.go{background:var(--go)} .ecard .top.done{background:var(--done)}
+  .ecard .body{padding:20px 22px 22px}
+  .ecard .ehead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .ecard h4{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+  .ecard .etype{font-size:12px;color:var(--muted);margin-top:2px}
+  .facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin:16px 0 4px;padding:14px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+  .fact{font-size:12.5px}
+  .fact .k{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-size:10.5px;font-weight:700;margin-bottom:2px}
+  .fact .v{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+  .rec{font-size:13.5px;color:var(--text);margin-top:14px;line-height:1.55}
+  .rec .lead{font-weight:700;color:var(--ink)}
+  .owner-flag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tbd-text);background:var(--tbd-bg);padding:4px 9px;border-radius:999px}
+  .owner-flag.departed{color:var(--stop-text);background:var(--stop-bg)}
+
+  .people{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .pbox{background:var(--wintermint);border-radius:12px;padding:16px 18px;border:1px solid var(--line-soft)}
+  .pbox .ph{font-size:11px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:10px}
+  .pbox .pn{font-size:14px;color:var(--ink);font-weight:600}
+  .pbox .pd{font-size:12.5px;color:var(--muted)}
+  .pbox ul{margin:6px 0 0;padding-left:18px;font-size:13px}
+  .pbox li{margin:3px 0}
+
+  footer{border-top:1px solid var(--line);padding:24px 0 40px;margin-top:50px}
+  footer .wrap{font-size:12.5px;color:var(--muted)}
+  footer b{color:var(--ink)}
+
+  @media (max-width:920px){
+    .kpi-grid{grid-template-columns:1fr 1fr}
+    .insights,.grid2,.strat{grid-template-columns:1fr}
+    .cardgrid,.people{grid-template-columns:1fr}
+    .donut{flex-basis:100%}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 18px}
+    .kpi-grid{grid-template-columns:1fr}
+    .hero{padding:24px 22px}
+    .count-note{margin-left:0;width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  /* ===== v3: live analytics strip ===== */
+  .mstrip{margin:0 0 18px;border:1px solid var(--line-soft);border-radius:12px;background:linear-gradient(180deg,#FBFDFF,#F3F8FD);padding:14px 16px}
+  .mstrip .ms-ctx{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .mstrip .ms-ctx::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--super-blue);box-shadow:0 0 0 3px rgba(35,108,255,.18);flex:0 0 auto}
+  .mstrip .ms-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .mstat{background:#fff;border:1px solid var(--line-soft);border-radius:10px;padding:11px 14px;position:relative;overflow:hidden}
+  .mstat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--super-blue)}
+  .mstat.val::before{background:var(--blueberry)} .mstat.tbd::before{background:var(--tbd)} .mstat.stop::before{background:var(--stop)}
+  .mstat .ms-k{display:block;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  .mstat .ms-v{display:block;font-size:24px;font-weight:700;color:var(--blueberry);font-variant-numeric:tabular-nums;line-height:1.1;margin-top:3px}
+  .mstat .ms-s{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+  .mstat.tbd .ms-v{color:var(--tbd-text)} .mstat.stop .ms-v{color:var(--stop-text)}
+
+  /* reset button */
+  .btn-reset{appearance:none;font-family:inherit;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:6px 13px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted)}
+  .btn-reset:hover{border-color:var(--stop);color:var(--stop-text)}
+  .btn-reset:focus-visible{outline:2px solid var(--super-blue);outline-offset:2px}
+
+  /* expandable matrix rows */
+  table.dt tbody tr.mrow{cursor:pointer}
+  table.dt tbody tr.mrow:focus-visible{outline:2px solid var(--super-blue);outline-offset:-2px}
+  .row-toggle{display:inline-block;color:var(--super-blue);font-weight:700;font-size:15px;line-height:1;margin-right:9px;transform:rotate(0deg);transition:transform .18s}
+  tr.mrow.open .row-toggle{transform:rotate(90deg)}
+  tr.mrow.open{background:#F1F6FF!important}
+  tr.mdetail td{background:#F7FAFE;border-bottom:1px solid var(--line-soft);padding:0}
+  .mdetail-inner{padding:16px 20px 18px 34px}
+  .mdetail-inner > div{margin-top:0}
+  .mdetail-inner > div + div{margin-top:12px}
+  .mdl{display:grid;grid-template-columns:1fr;gap:11px}
+  .mdl-item{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:start}
+  .mdl-k{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:2px}
+  .mdl-v{font-size:13px;color:var(--text);line-height:1.55}
+  .mdl-v .res{margin-top:7px}
+
+  /* clickable contract-timeline markers */
+  .tl-stop.tl-click{cursor:pointer;border-radius:10px;transition:transform .12s, background .12s}
+  .tl-stop.tl-click:hover{transform:translateY(-2px);background:rgba(35,108,255,.05)}
+  .tl-stop.tl-click:focus-visible{outline:2px solid var(--super-blue);outline-offset:2px}
+
+  /* ===== v3: decision planner ===== */
+  .plan-tot{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:4px 0 18px}
+  .ptl{background:#fff;border:1px solid var(--line-soft);border-radius:12px;padding:14px 16px;position:relative;overflow:hidden}
+  .ptl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+  .ptl.stop::before{background:var(--stop)} .ptl.keep::before{background:var(--go)} .ptl.tbd::before{background:var(--tbd)}
+  .ptl-k{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .ptl-v{display:block;font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.05;margin-top:4px;letter-spacing:-.01em;transition:color .15s}
+  .ptl.stop .ptl-v{color:var(--stop-text)} .ptl.keep .ptl-v{color:var(--go-text)} .ptl.tbd .ptl-v{color:var(--tbd-text)}
+  .ptl-s{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+  .plan-rows{display:flex;flex-direction:column;gap:8px}
+  .prow{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:10px 12px;border:1px solid var(--line-soft);border-radius:10px;background:#FCFDFF}
+  .prow-nm{font-weight:600;color:var(--ink);font-size:13.5px}
+  .prow-cat{font-size:11px;font-weight:600;color:var(--muted);margin-left:8px}
+  .prow-val{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink);font-size:13.5px;white-space:nowrap}
+  .seg3{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
+  .seg3 button{appearance:none;font-family:inherit;cursor:pointer;border:none;background:none;font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--muted);padding:6px 13px;border-right:1px solid var(--line);transition:background .12s,color .12s}
+  .seg3 button:last-child{border-right:none}
+  .seg3 button:hover{background:var(--wintermint)}
+  .seg3 button:focus-visible{outline:2px solid var(--super-blue);outline-offset:-2px}
+  .seg3 button.on[data-d="stop"]{background:var(--stop-bg);color:var(--stop-text)}
+  .seg3 button.on[data-d="keep"]{background:var(--go-bg);color:var(--go-text)}
+  .seg3 button.on[data-d="undecided"]{background:var(--tbd-bg);color:var(--tbd-text)}
+  .plan-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .btn-csv{appearance:none;font-family:inherit;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:7px 15px;border-radius:999px;border:1px solid var(--super-blue);background:var(--super-blue);color:#fff}
+  .btn-csv:hover{background:#1A52C7;border-color:#1A52C7}
+  .btn-csv:focus-visible{outline:2px solid var(--super-blue);outline-offset:2px}
+  @media (max-width:620px){
+    .plan-tot{grid-template-columns:1fr}
+    .prow{grid-template-columns:1fr;gap:8px}
+    .seg3{width:100%} .seg3 button{flex:1}
+  }
+
+  @media (max-width:560px){
+    .mstrip .ms-tiles{grid-template-columns:1fr 1fr}
+    .mdl-item{grid-template-columns:1fr;gap:3px}
+  }
+
+  @media print{
+    body{background:#fff}
+    .tabs,.controls{display:none}
+    .btn-reset,.btn-csv,.row-toggle{display:none!important}
+    tr.mdetail{display:none!important}
+    .panel{display:block!important;break-inside:avoid}
+    .mstrip{break-inside:avoid}
+    .topbar{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .hero,.kpi,.ecard,.pcard,.mstat{box-shadow:none;border:1px solid var(--line)}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="topbar">
+  <div class="wrap">
+    <div class="lockup-row">
+      <div>
+        <div class="lockup-eyebrow">Marketing</div>
+        <div class="lockup-title">Craft Development &amp; Capabilities</div>
+      </div>
+      <span class="pill"><span class="dot"></span>Confidential · Internal</span>
+    </div>
+    <div class="head-main">
+      <div class="kicker">FY2026/27 · Executive Handoff</div>
+      <h1 class="title">Transition Guide <span class="yr">FY2026/27</span></h1>
+      <p class="subtitle">Source of truth for the team's Run-the-Business workstreams — strategic partnerships, vendors, tools &amp; tech, and dashboards. A structured handoff so an incoming owner can onboard, read current status, and prioritize from this page alone.</p>
+      <div class="head-meta">
+        <span>Prepared by <b>Maria Boukhval</b> on behalf of <b>Mos Okediji</b></span>
+        <span>For: <b>Chief Marketing Officer</b></span>
+        <span>Prepared <b>Jun 4, 2026</b> · Updated <b>Jun 15, 2026</b></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- read this first -->
+  <section class="hero">
+    <div class="eyebrow">The 1-minute read</div>
+    <p>
+      <span class="hl">18 decisions</span> sit in the matrix — <span class="hl-warn">9 still TBD</span>,
+      <span class="hl">5 to stop</span>, 2 to continue, 2 closing out. Non-renewals of
+      <span class="hl">LinkedIn &amp; Reforge</span> recover roughly <span class="hl-go">$133K</span> a year.
+      Three partner contracts land on <span class="hl-warn">Jul 31, 2026 — 46 days out</span>. The critical path isn't money:
+      <span class="hl">every Run-the-Business workstream is currently unassigned</span>, and several admin
+      seats sit with people who have left.
+    </p>
+  </section>
+
+  <!-- key resources -->
+  <div class="strip">
+    <span class="slabel">Key resources</span>
+    <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/0AKQLI34evSaKUk9PVA">Google Workspace (L&amp;D + Capabilities)</a>
+    <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1KrgSHBzkxugbQw9DFA0gtVXIzSDFtlyQ">Exit &amp; Transition Folder</a>
+    <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1aMBIc77DdpjbikjyzdgyiRcRxDkTG8YC?usp=drive_link">Team Google Folder</a>
+    <a class="lnk" target="_blank" rel="noopener" href="https://growyourcraft.intuit.com/craft/home?i=X-KxbAEreg8pd7030IivDk_8XlizTR76">Craft Website</a>
+    <a class="lnk" target="_blank" rel="noopener" href="https://marketingcraftdevcapabilities.github.io/fy26_ai_adoption_dashboard/">FY26 AI Adoption dashboard</a>
+  </div>
+
+  <!-- strategic directions -->
+  <div class="strat">
+    <div class="sc"><div class="t">Run the Business (RTB)</div><div class="d">Ongoing operations across five workstreams: Onboarding · Learning Experiences · Strategic Partnerships · Tools &amp; Tech · GenAI Hub &amp; Digest.</div></div>
+    <div class="sc"><div class="t">Big Rock 1 — WOW</div><div class="d">Improving ways of working.</div></div>
+    <div class="sc"><div class="t">Big Rock 2 — AI Transformation</div><div class="d">Driving the AI strategy.</div></div>
+  </div>
+  <div class="openaction"><b>Open action across the board:</b> access to all shared folders, admin seats, tools and dashboards must be transitioned.</div>
+
+  <!-- legend -->
+  <div class="legend-strip" aria-label="Status legend">
+    <span class="li"><span class="sw stop"></span><b>Stop</b>&nbsp;— do not renew, wind down</span>
+    <span class="li"><span class="sw tbd"></span><b>TBD</b>&nbsp;— decide after transition</span>
+    <span class="li"><span class="sw go"></span><b>Continue</b>&nbsp;— transition access only</span>
+    <span class="li"><span class="sw done"></span><b>Completed</b>&nbsp;— delivered, close POs</span>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Decision items</div><div class="num">18</div>
+      <div class="sub">Partners, vendors &amp; tools under review</div>
+      <div class="ministack" title="5 Stop · 9 TBD · 2 Continue · 2 Completed">
+        <i style="width:27.8%;background:var(--stop)"></i><i style="width:50%;background:var(--tbd)"></i><i style="width:11.1%;background:var(--go)"></i><i style="width:11.1%;background:var(--done)"></i>
+      </div>
+    </div>
+    <div class="kpi"><div class="label">Decisions pending</div><div class="num">9</div><div class="sub">Items marked TBD after transition</div><div class="chip">half of the matrix</div></div>
+    <div class="kpi"><div class="label">Annual spend to wind down</div><div class="num small">$133K</div><div class="sub">LinkedIn &amp; Reforge non-renewals</div><div class="chip">$43K + $90K = $133K</div></div>
+    <div class="kpi"><div class="label">Workstreams with an owner</div><div class="num">0<span style="font-size:.55em;color:var(--muted)"> / 5</span></div><div class="sub">All RTB workstreams currently TBD</div><div class="chip">ownership = critical path</div></div>
+  </div>
+
+  <!-- insights -->
+  <div class="sec-head"><h2><span class="marker">§01</span>What leadership needs to know</h2><span class="desc">Six takeaways from the full portfolio.</span></div>
+  <div class="sec-rule" style="margin-bottom:18px"></div>
+  <div class="insights">
+    <div class="callout tbd"><b>Ownership is the critical path.</b> Every Run-the-Business workstream is unassigned ("TBD, finding"). Naming owners gates almost every other action in this guide.</div>
+    <div class="callout stop"><b>Two clean non-renewals recover ~$133K.</b> LinkedIn (200 seats, 25 active) and Reforge (100 seats, ~80% dormant). Communicate the wind-down and migrate any active users.</div>
+    <div class="callout tbd"><b>Deadline cliff on Jul 31, 2026 — 46 days out.</b> Three partner contracts converge: renew ANA, finalize the Reforge wind-down (comms before the 31st), and decide The Work / WARC.</div>
+    <div class="callout go"><b>Two clear keeps.</b> ANA (22-year partner, unlimited seats for all of Intuit) and Google Workspace (core infrastructure). Continue as-is and transition access.</div>
+    <div class="callout stop"><b>Access risk from departures.</b> Admin seats are held by people who have left — Sylvia Luong, Emily Valencia, Paulina. Re-establish Intuit admins before access lapses.</div>
+    <div class="callout done"><b>Closing out clean.</b> BW Events and Bright Idea Sparks delivered their work; reconcile the final invoices and close the open POs.</div>
+  </div>
+
+  <!-- ===== TABS ===== -->
+  <div class="tabs" role="tablist" aria-label="Transition sections">
+    <button class="tab active" role="tab" aria-selected="true"  data-tab="matrix">Decision Matrix</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="partners">Strategic Partners</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="vendors">Vendors</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="tools">Tools &amp; Tech</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="streams">Workstreams</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="dash">Dashboards &amp; Access</button>
+  </div>
+
+  <div class="panels">
+
+    <!-- ===== TAB 1: MATRIX + ANALYTICS ===== -->
+    <section class="panel active" id="matrix" role="tabpanel">
+
+      <div class="grid2 tight">
+        <div class="pcard">
+          <h3>Disposition mix</h3>
+          <p class="ptag">How the 18 decision items split across the legend. Click a slice to filter the table.</p>
+          <div class="donut-wrap">
+            <div class="donut">
+              <svg viewBox="0 0 220 220" role="img" aria-label="Donut: 5 Stop, 9 TBD, 2 Continue, 2 Completed">
+                <circle cx="110" cy="110" r="80" fill="none" stroke="#EDF1F6" stroke-width="28"></circle>
+                <g transform="rotate(-90 110 110)" fill="none" stroke-width="28">
+                  <circle class="seg" data-status="stop" cx="110" cy="110" r="80" stroke="#FF5C37" stroke-dasharray="139.6 363.0" stroke-dashoffset="0"></circle>
+                  <circle class="seg" data-status="tbd" cx="110" cy="110" r="80" stroke="#F9C741" stroke-dasharray="251.3 251.3" stroke-dashoffset="-139.6"></circle>
+                  <circle class="seg" data-status="go" cx="110" cy="110" r="80" stroke="#3BD85E" stroke-dasharray="55.8 446.8" stroke-dashoffset="-391.0"></circle>
+                  <circle class="seg" data-status="done" cx="110" cy="110" r="80" stroke="#236CFF" stroke-dasharray="55.8 446.8" stroke-dashoffset="-446.8"></circle>
+                </g>
+                <text class="donut-center" x="110" y="104" text-anchor="middle" font-size="40">18</text>
+                <text x="110" y="128" text-anchor="middle" font-size="13" fill="#647389" font-weight="600">items</text>
+              </svg>
+            </div>
+            <div class="dlegend">
+              <div class="row" data-status="stop"><span class="sw stop"></span><span class="nm">Stop</span><span class="ct">5</span><span class="pc">28%</span></div>
+              <div class="row" data-status="tbd"><span class="sw tbd"></span><span class="nm">TBD after transition</span><span class="ct">9</span><span class="pc">50%</span></div>
+              <div class="row" data-status="go"><span class="sw go"></span><span class="nm">Continue</span><span class="ct">2</span><span class="pc">11%</span></div>
+              <div class="row" data-status="done"><span class="sw done"></span><span class="nm">Completed</span><span class="ct">2</span><span class="pc">11%</span></div>
+            </div>
+          </div>
+          <div class="sowhat"><b>So what:</b> half the work is deciding, not doing. The 9 TBDs are where the incoming owner spends their first 30 days.</div>
+        </div>
+
+        <div class="pcard">
+          <h3>Status × category</h3>
+          <p class="ptag">Where each disposition lives. Click any cell to filter the table to that slice.</p>
+          <table class="xtab" id="xtab">
+            <thead>
+              <tr><th class="rowh"></th><th>Stop</th><th>TBD</th><th>Continue</th><th>Done</th><th class="tot">All</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="rl">Partner</td>
+                <td><button class="xcell stopc" data-cat="partner" data-status="stop"><span class="c">2</span><span class="mb" style="width:33%;background:var(--stop)"></span></button></td>
+                <td><button class="xcell tbdc" data-cat="partner" data-status="tbd"><span class="c">3</span><span class="mb" style="width:50%;background:var(--tbd)"></span></button></td>
+                <td><button class="xcell goc" data-cat="partner" data-status="go"><span class="c">1</span><span class="mb" style="width:17%;background:var(--go)"></span></button></td>
+                <td><button class="xcell zero" data-cat="partner" data-status="done" disabled><span class="c">0</span><span class="mb"></span></button></td>
+                <td><button class="xcell totc" data-cat="partner" data-status="all"><span class="c">6</span></button></td>
+              </tr>
+              <tr>
+                <td class="rl">Vendor</td>
+                <td><button class="xcell zero" data-cat="vendor" data-status="stop" disabled><span class="c">0</span><span class="mb"></span></button></td>
+                <td><button class="xcell zero" data-cat="vendor" data-status="tbd" disabled><span class="c">0</span><span class="mb"></span></button></td>
+                <td><button class="xcell zero" data-cat="vendor" data-status="go" disabled><span class="c">0</span><span class="mb"></span></button></td>
+                <td><button class="xcell donec" data-cat="vendor" data-status="done"><span class="c">2</span><span class="mb" style="width:33%;background:var(--done)"></span></button></td>
+                <td><button class="xcell totc" data-cat="vendor" data-status="all"><span class="c">2</span></button></td>
+              </tr>
+              <tr>
+                <td class="rl">Tool</td>
+                <td><button class="xcell stopc" data-cat="tool" data-status="stop"><span class="c">3</span><span class="mb" style="width:50%;background:var(--stop)"></span></button></td>
+                <td><button class="xcell tbdc" data-cat="tool" data-status="tbd"><span class="c">6</span><span class="mb" style="width:100%;background:var(--tbd)"></span></button></td>
+                <td><button class="xcell goc" data-cat="tool" data-status="go"><span class="c">1</span><span class="mb" style="width:17%;background:var(--go)"></span></button></td>
+                <td><button class="xcell zero" data-cat="tool" data-status="done" disabled><span class="c">0</span><span class="mb"></span></button></td>
+                <td><button class="xcell totc" data-cat="tool" data-status="all"><span class="c">10</span></button></td>
+              </tr>
+              <tr class="totrow">
+                <td class="rl tot">All</td>
+                <td><button class="xcell totc" data-cat="all" data-status="stop"><span class="c">5</span></button></td>
+                <td><button class="xcell totc" data-cat="all" data-status="tbd"><span class="c">9</span></button></td>
+                <td><button class="xcell totc" data-cat="all" data-status="go"><span class="c">2</span></button></td>
+                <td><button class="xcell totc" data-cat="all" data-status="done"><span class="c">2</span></button></td>
+                <td><button class="xcell totc corner" data-cat="all" data-status="all"><span class="c">18</span></button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="sowhat"><b>So what:</b> tools carry the most cleanup (9 of 16 need a decision or a stop); partners carry the money and the deadlines.</div>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <h3>Contract value by category &amp; disposition</h3>
+        <p class="ptag">Catalogued contract / PO value, segmented by status. Bars share one scale so categories are comparable.</p>
+        <div class="cbars">
+          <div class="cbar">
+            <div class="cl"><span class="nm">Partners</span><span class="val">~$350K</span></div>
+            <div class="stack">
+              <i style="width:38%;background:var(--stop)" title="Stop $133K"></i>
+              <i style="width:40.2%;background:var(--tbd)" title="TBD $140.5K"></i>
+              <i style="width:21.8%;background:var(--go)" title="Continue $76K"></i>
+            </div>
+          </div>
+          <div class="cbar">
+            <div class="cl"><span class="nm">Vendors</span><span class="val">~$319K</span></div>
+            <div class="stack"><i style="width:91.2%;background:var(--done)" title="Completed / closing $319K"></i></div>
+          </div>
+          <div class="cbar">
+            <div class="cl"><span class="nm">Tools</span><span class="val">~$13K</span></div>
+            <div class="stack"><i style="width:3.7%;background:var(--tbd)" title="TBD $13K (Sendoso + Docebo)"></i></div>
+          </div>
+        </div>
+        <div class="seg-leg">
+          <span><span class="sw stop"></span>Stop — recover</span>
+          <span><span class="sw tbd"></span>TBD — pending decision</span>
+          <span><span class="sw go"></span>Continue — ongoing</span>
+          <span><span class="sw done"></span>Completed — delivered / closing</span>
+        </div>
+        <div class="bar-note">Partner figures are annual contract values; vendor figures are current-cycle PO spend (mostly paid); tools show only the two with listed values (Sendoso $10,200, Docebo $2,750). Items with N/A or TBD budgets are excluded.</div>
+        <div class="sowhat"><b>So what:</b> of the ~$350K in partner spend, <b>$133K is recoverable now</b> (Stop), <b>$140K awaits a decision</b> (TBD), and only <b>$76K is committed ongoing</b> (ANA).</div>
+      </div>
+
+      <div class="pcard">
+        <h3>Contract calendar — what's due when</h3>
+        <p class="ptag">Renewal, expiry and decision dates across the FY2026 calendar year, with days remaining from today (Jun 15). Jul 31 is the pressure point.</p>
+        <div class="tl-scroll">
+          <div class="timeline">
+            <div class="tl-line"></div>
+            <div class="tl-track">
+              <div class="tl-stop past">
+                <div class="tl-items">
+                  <span class="tl-chip" style="border-color:var(--done);color:var(--done-text)"><span class="d" style="background:var(--done)"></span>BW Events</span>
+                  <span class="tl-chip" style="border-color:var(--tbd);color:var(--tbd-text)"><span class="d" style="background:var(--tbd)"></span>Docebo</span>
+                </div>
+                <span class="tl-dot"></span><span class="tl-date">Apr 30</span><span class="tl-meta">POs closing · migration done</span><span class="tl-days">closed</span>
+              </div>
+              <div class="tl-stop past">
+                <div class="tl-items"><span class="tl-chip" style="border-color:var(--done);color:var(--done-text)"><span class="d" style="background:var(--done)"></span>Bright Idea Sparks</span></div>
+                <span class="tl-dot"></span><span class="tl-date">May 29</span><span class="tl-meta">Session 2 in payment</span><span class="tl-days">closed</span>
+              </div>
+              <div class="tl-stop now">
+                <div class="tl-items"></div>
+                <span class="tl-dot"></span><span class="tl-date">Jun 15 · Today</span><span class="tl-meta">Source last updated</span><span class="tl-days">now</span>
+              </div>
+              <div class="tl-stop cliff">
+                <div class="tl-items">
+                  <span class="tl-chip" style="border-color:var(--go);color:var(--go-text)"><span class="d" style="background:var(--go)"></span>ANA · renew</span>
+                  <span class="tl-chip" style="border-color:var(--stop);color:var(--stop-text)"><span class="d" style="background:var(--stop)"></span>Reforge · stop</span>
+                  <span class="tl-chip" style="border-color:var(--tbd);color:var(--tbd-text)"><span class="d" style="background:var(--tbd)"></span>The Work · decide</span>
+                </div>
+                <span class="tl-dot"></span><span class="tl-date">Jul 31</span><span class="tl-meta">The cliff — 3 contracts</span><span class="tl-days">46 days</span>
+              </div>
+              <div class="tl-stop soon">
+                <div class="tl-items"><span class="tl-chip" style="border-color:var(--stop);color:var(--stop-text)"><span class="d" style="background:var(--stop)"></span>LinkedIn · stop</span></div>
+                <span class="tl-dot"></span><span class="tl-date">Aug 16</span><span class="tl-meta">Non-renewal comms</span><span class="tl-days">62 days</span>
+              </div>
+              <div class="tl-stop">
+                <div class="tl-items"><span class="tl-chip" style="border-color:var(--tbd);color:var(--tbd-text)"><span class="d" style="background:var(--tbd)"></span>MTM · right to refuse</span></div>
+                <span class="tl-dot"></span><span class="tl-date">Oct 31</span><span class="tl-meta">Decision deadline</span><span class="tl-days">138 days</span>
+              </div>
+              <div class="tl-stop">
+                <div class="tl-items">
+                  <span class="tl-chip" style="border-color:var(--tbd);color:var(--tbd-text)"><span class="d" style="background:var(--tbd)"></span>IA</span>
+                  <span class="tl-chip" style="border-color:var(--tbd);color:var(--tbd-text)"><span class="d" style="background:var(--tbd)"></span>MTM</span>
+                </div>
+                <span class="tl-dot"></span><span class="tl-date">Dec 31</span><span class="tl-meta">Year-end renewals</span><span class="tl-days">199 days</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sowhat"><b>So what:</b> the handoff has a hard deadline. Whoever takes ownership needs the ANA, Reforge and The Work decisions made and communicated before Jul 31.</div>
+      </div>
+
+      <div class="pcard">
+        <h3>Priority decision matrix</h3>
+        <p class="ptag">Read this first. Every item the incoming owner inherits — search, sort any column, or filter by status and category.</p>
+
+        <div class="controls">
+          <div class="fgroup">
+            <span class="flabel">Status</span>
+            <button class="chipbtn active" data-fg="status" data-val="all">All</button>
+            <button class="chipbtn" data-fg="status" data-val="stop">Stop</button>
+            <button class="chipbtn" data-fg="status" data-val="tbd">TBD</button>
+            <button class="chipbtn" data-fg="status" data-val="go">Continue</button>
+            <button class="chipbtn" data-fg="status" data-val="done">Completed</button>
+          </div>
+          <div class="fgroup">
+            <span class="flabel">Category</span>
+            <button class="chipbtn active" data-fg="cat" data-val="all">All</button>
+            <button class="chipbtn" data-fg="cat" data-val="partner">Partner</button>
+            <button class="chipbtn" data-fg="cat" data-val="vendor">Vendor</button>
+            <button class="chipbtn" data-fg="cat" data-val="tool">Tool</button>
+          </div>
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+            <input id="matrix-search" type="search" placeholder="Search items &amp; actions…" aria-label="Search the decision matrix">
+          </div>
+          <button class="btn-reset" id="matrix-reset" type="button" hidden>Reset</button>
+          <span class="count-note" id="matrix-count">18 of 18</span>
+        </div>
+
+        <div class="mstrip" id="mstrip" aria-live="polite">
+          <div class="ms-ctx" id="ms-ctx">Showing all 18 items</div>
+          <div class="ms-tiles">
+            <div class="mstat"><span class="ms-k">In view</span><span class="ms-v" id="ms-count">18</span><span class="ms-s">of 18 items</span></div>
+            <div class="mstat val"><span class="ms-k">Contract value</span><span class="ms-v" id="ms-value">$525K</span><span class="ms-s">catalogued, in view</span></div>
+            <div class="mstat tbd"><span class="ms-k">Pending decisions</span><span class="ms-v" id="ms-tbd">9</span><span class="ms-s">marked TBD</span></div>
+            <div class="mstat stop"><span class="ms-k">Jul 31 cliff</span><span class="ms-v" id="ms-cliff">3</span><span class="ms-s">due on/before</span></div>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+          <table class="dt sortable" id="matrix-table">
+            <thead>
+              <tr>
+                <th class="th-sort" data-key="item">Item<span class="ind"></span></th>
+                <th class="th-sort" data-key="cat">Category<span class="ind"></span></th>
+                <th class="th-sort" data-key="status">Status<span class="ind"></span></th>
+                <th class="th-sort" data-key="budget">Budget<span class="ind"></span></th>
+                <th class="th-sort" data-key="due">Contract due<span class="ind"></span></th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="matrix-body">
+              <tr data-status="go" data-cat="partner"><td><span class="item-nm">ANA</span></td><td><span class="badge cat">Partner</span></td><td><span class="badge go"><span class="d"></span>Continue</span></td><td class="num" data-sort="76370">~$76–77K</td><td class="num" data-sort="20260731">Jul 31, 2026</td><td>Intuit-wide. Assign a new relationship owner and lock the activation plan.</td></tr>
+              <tr data-status="stop" data-cat="partner"><td><span class="item-nm">LinkedIn Learning Hub</span></td><td><span class="badge cat">Partner</span></td><td><span class="badge stop"><span class="d"></span>Stop</span></td><td class="num" data-sort="43000">$43,000</td><td class="num" data-sort="20260816">Aug 16, 2026</td><td>No renewal: 200 seats, 25 active. Hold the pending invoice; communicate the end of the partnership.</td></tr>
+              <tr data-status="stop" data-cat="partner"><td><span class="item-nm">Reforge</span></td><td><span class="badge cat">Partner</span></td><td><span class="badge stop"><span class="d"></span>Stop</span></td><td class="num" data-sort="90000">$90,000</td><td class="num" data-sort="20260731">Jul 31, 2026</td><td>No renewal: 100 seats, ~80% dormant. Communicate in <a target="_blank" rel="noopener" href="https://intuit-teams.slack.com/archives/C4511F4CU">#reforge-marketing</a> before Jul 31.</td></tr>
+              <tr data-status="tbd" data-cat="partner"><td><span class="item-nm">IA — Insights Association</span></td><td><span class="badge cat">Partner</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td><td class="num" data-sort="25000">$25,000 <span style="color:var(--muted)">($18,289 cr.)</span></td><td class="num" data-sort="20261231">Dec 31, 2026</td><td>Research team only. Leverage the credit; confirm need with Christine Chu.</td></tr>
+              <tr data-status="tbd" data-cat="partner"><td><span class="item-nm">The Work / WARC / Lions OS</span></td><td><span class="badge cat">Partner</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td><td class="num" data-sort="90500">$90,500</td><td class="num" data-sort="20260731">Jul 31, 2026</td><td>Ask the brand whether to keep it; reach out to partners to communicate the decision.</td></tr>
+              <tr data-status="tbd" data-cat="partner"><td><span class="item-nm">MTM</span></td><td><span class="badge cat">Partner</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td><td class="num" data-sort="25000">$25,000</td><td class="num" data-sort="20261231">Dec 31, 2026</td><td>Decide next steps; right to refuse by Oct 31. Reach out to the partner.</td></tr>
+              <tr data-status="done" data-cat="vendor"><td><span class="item-nm">BW Events</span></td><td><span class="badge cat">Vendor</span></td><td><span class="badge done"><span class="d"></span>Completed</span></td><td class="num" data-sort="113225">$113,225</td><td class="num" data-sort="20260430">Apr 30, 2026</td><td>Make changes on the <a target="_blank" rel="noopener" href="https://growyourcraft.intuit.com/craft/home?i=X-KxbAEreg8pd7030IivDk_8XlizTR76#search">Craft website</a>; close out completed POs.</td></tr>
+              <tr data-status="done" data-cat="vendor"><td><span class="item-nm">Bright Idea Sparks · Ikezi Kamanu</span></td><td><span class="badge cat">Vendor</span></td><td><span class="badge done"><span class="d"></span>Completed</span></td><td class="num" data-sort="48763">$48,763</td><td class="num" data-sort="20260529">May 29, 2026</td><td>No actions beyond closeout; session 2 in payment, work completed.</td></tr>
+              <tr data-status="tbd" data-cat="tool"><td><span class="item-nm">Sendoso</span></td><td><span class="badge cat">Tool</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td><td class="num" data-sort="10200">$10,200</td><td class="num" data-sort="99999999">TBD</td><td>Intuit-wide gifting + inventory. Transfer inventory to a new/existing group.</td></tr>
+              <tr data-status="stop" data-cat="tool"><td><span class="item-nm">Splash / Cvent</span></td><td><span class="badge cat">Tool</span></td><td><span class="badge stop"><span class="d"></span>Stop</span></td><td class="num" data-sort="-1">TBD</td><td class="num" data-sort="99999999">TBD</td><td>Terminate the partnership; remove departed licenses.</td></tr>
+              <tr data-status="tbd" data-cat="tool"><td><span class="item-nm">Swoogo</span></td><td><span class="badge cat">Tool</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td><td class="num" data-sort="-1">TBD</td><td class="num" data-sort="99999999">TBD</td><td>Decide the future of the <a target="_blank" rel="noopener" href="https://growyourcraft.intuit.com/craft/home?i=X-KxbAEreg8pd7030IivDk_8XlizTR76#search">Craft website</a> (hosted here). Invite new owners or freeze.</td></tr>
+              <tr data-status="tbd" data-cat="tool"><td><span class="item-nm">Docebo</span></td><td><span class="badge cat">Tool</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td><td class="num" data-sort="2750">$2,750</td><td class="num" data-sort="20260430">Apr 30, 2026</td><td>Migration complete (14 courses). Manage remaining hours with BW.</td></tr>
+              <tr data-status="tbd" data-cat="tool"><td><span class="item-nm">Google Analytics</span></td><td><span class="badge cat">Tool</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td><td class="num" data-sort="-1">TBD</td><td class="num" data-sort="99999999">TBD</td><td>Craft website analytics. Requires a new Admin; request access.</td></tr>
+              <tr data-status="tbd" data-cat="tool"><td><span class="item-nm">Workato</span></td><td><span class="badge cat">Tool</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td><td class="num" data-sort="-1">TBD</td><td class="num" data-sort="99999999">TBD</td><td>Terminate or update licenses and access via the IT Portal.</td></tr>
+              <tr data-status="tbd" data-cat="tool"><td><span class="item-nm">Intuit Insights web &amp; Slack</span></td><td><span class="badge cat">Tool</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td><td class="num" data-sort="-1">N/A</td><td class="num" data-sort="99999999">N/A</td><td>Remove/adjust outdated pages; maintain <a target="_blank" rel="noopener" href="https://intuit-teams.slack.com/archives/C4511F4CU">#mktg-comms-all</a>, #reforge-marketing, #genai-mc-connect.</td></tr>
+              <tr data-status="stop" data-cat="tool"><td><span class="item-nm">M&amp;C Zoom</span></td><td><span class="badge cat">Tool</span></td><td><span class="badge stop"><span class="d"></span>Stop</span></td><td class="num" data-sort="-1">N/A</td><td class="num" data-sort="99999999">N/A</td><td>Rescope/delete; not working. Confirm an LLE replacement first, then transfer/rename.</td></tr>
+              <tr data-status="stop" data-cat="tool"><td><span class="item-nm">Outlook</span></td><td><span class="badge cat">Tool</span></td><td><span class="badge stop"><span class="d"></span>Stop</span></td><td class="num" data-sort="-1">N/A</td><td class="num" data-sort="99999999">N/A</td><td>Archive the data. Disconnect or rename the shared mailbox.</td></tr>
+              <tr data-status="go" data-cat="tool"><td><span class="item-nm">Google WS</span></td><td><span class="badge cat">Tool</span></td><td><span class="badge go"><span class="d"></span>Continue</span></td><td class="num" data-sort="-1">N/A</td><td class="num" data-sort="99999999">N/A</td><td>Core infrastructure. Maintain via Identity Manager; request Drive access for past data.</td></tr>
+              <tr class="empty-row" id="matrix-empty" style="display:none"><td colspan="6">No items match these filters.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <h3>Decision planner — model the wind-down</h3>
+        <p class="ptag">Set a disposition for each budgeted contract to see what you'd recover, commit, or still owe a decision on. It starts from today's recommendation; your changes recompute live and don't touch the data above.</p>
+        <div class="plan-tot">
+          <div class="ptl stop"><span class="ptl-k">Recover by stopping</span><span class="ptl-v" id="pt-stop">$133K</span><span class="ptl-s" id="pt-stop-n">2 contracts</span></div>
+          <div class="ptl keep"><span class="ptl-k">Committed to keep</span><span class="ptl-v" id="pt-keep">$76K</span><span class="ptl-s" id="pt-keep-n">1 contract</span></div>
+          <div class="ptl tbd"><span class="ptl-k">Still undecided</span><span class="ptl-v" id="pt-tbd">$153K</span><span class="ptl-s" id="pt-tbd-n">5 contracts</span></div>
+        </div>
+        <div class="plan-rows" id="plan-rows"></div>
+        <div class="plan-actions">
+          <button class="btn-reset" id="plan-reset" type="button">Reset to recommendation</button>
+          <button class="btn-csv" id="plan-csv" type="button">Download plan (CSV)</button>
+        </div>
+        <div class="sowhat"><b>So what:</b> the recommendation already recovers $133K with two clean stops. The lever is the five undecided contracts — every one you resolve moves money out of limbo before the Jul 31 cliff.</div>
+      </div>
+    </section>
+
+    <!-- ===== TAB 2: PARTNERS ===== -->
+    <section class="panel" id="partners" role="tabpanel">
+      <div class="cardgrid">
+
+        <div class="ecard">
+          <div class="top go"></div>
+          <div class="body">
+            <div class="ehead"><div><h4>ANA</h4><div class="etype">Association of National Advertisers · 22-year partner</div></div><span class="badge go"><span class="d"></span>Continue</span></div>
+            <div class="facts">
+              <div class="fact"><span class="k">Contract</span><span class="v">$76,370–77,120</span></div>
+              <div class="fact"><span class="k">Renewal</span><span class="v">Jul 31, 2026</span></div>
+              <div class="fact"><span class="k">Seats</span><span class="v">Unlimited · all of Intuit</span></div>
+            </div>
+            <div class="contact"><span class="nm">Mike Mangan</span> · <span class="role">VP, Member Relations</span> · (212) 455-8021 · <a href="mailto:mmangan@ana.net">mmangan@ana.net</a><br><span class="nm">April Rueppel</span> · <span class="role">VP, Mktg Training &amp; Dev.</span> · 646.825.0225 · <a href="mailto:arueppel@ana.net">arueppel@ana.net</a></div>
+            <div class="rec"><span class="lead">Renew for FY27.</span> Put an activation plan in place and resolve the pending invoice increase (from $72,040). POC meeting set for 06/19 to decide scope. FY27 goal: activate the leaderboard and track activities by role and seniority. Engagement wasn't tracked before. Access via Intuit SSO — no admin seat.</div>
+            <div class="res"><span class="rlbl">Resources</span>
+              <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1kwRkVCbu4-qwnlffoocJwiYEEOsgkEtO">Google folder</a>
+              <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/133816">PO US0133816</a>
+              <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/89583">PO US0089583</a>
+              <a class="lnk" target="_blank" rel="noopener" href="https://www.ana.net/">ANA site</a>
+              <a class="lnk" target="_blank" rel="noopener" href="https://www.ana.net/amplify">ANA Amplify</a>
+              <a class="lnk" target="_blank" rel="noopener" href="https://www.ana.net/calendar/index/calendar_filter/industry">Events Calendar</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ecard">
+          <div class="top stop"></div>
+          <div class="body">
+            <div class="ehead"><div><h4>LinkedIn Learning Hub</h4><div class="etype">Learning platform partner</div></div><span class="badge stop"><span class="d"></span>Stop</span></div>
+            <div class="facts">
+              <div class="fact"><span class="k">Contract</span><span class="v">$43,000 · not paid</span></div>
+              <div class="fact"><span class="k">Renewal</span><span class="v">Aug 16, 2026</span></div>
+              <div class="fact"><span class="k">Usage</span><span class="v">200 seats · 25 active</span></div>
+            </div>
+            <div class="contact"><span class="nm">Ryan Field</span> · <span class="role">Large Enterprise Account Director</span> · +1 (415) 290-0823 · <a href="mailto:rfield@linkedin.com">rfield@linkedin.com</a> · <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/fieldryan/">LinkedIn profile</a><br><span class="nm">Tracy Diop</span> · <span class="role">Principal CSM</span> · <a href="mailto:tdiop@linkedin.com">tdiop@linkedin.com</a></div>
+            <div class="rec"><span class="lead">Do not renew.</span> New PO is open but unpaid — hold before paying. Communicate license termination, then migrate active users to a new single-admin group (LinkedIn can do this in bulk). Group owner Sylvia Luong has left. A 52-week FY27 activation plan exists if leadership reverses — contact Maria Boukhval.</div>
+            <div class="res"><span class="rlbl">Resources</span>
+              <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1HIVXvhVT4W1efIegkx82IOpIobF7rY8T">Google folder</a>
+              <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/154356">PO US0154356 (new)</a>
+              <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/126270">Prev PO US0126270</a>
+              <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1pHh3prcmaGevSYaBheuckFRqFOkZikJp/view">Activation Plan dashboard</a>
+              <a class="lnk" target="_blank" rel="noopener" href="https://learning.linkedin.com/customer-success-center/linkedin-learning-course-content-corner#content-maps">Course Content Corner</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ecard">
+          <div class="top stop"></div>
+          <div class="body">
+            <div class="ehead"><div><h4>Reforge</h4><div class="etype">Learning partner since 2020</div></div><span class="badge stop"><span class="d"></span>Stop</span></div>
+            <div class="facts">
+              <div class="fact"><span class="k">Contract</span><span class="v">$90,000</span></div>
+              <div class="fact"><span class="k">Renewal</span><span class="v">Jul 31, 2026</span></div>
+              <div class="fact"><span class="k">Usage</span><span class="v">100 seats · ~80% dormant</span></div>
+            </div>
+            <div class="contact"><span class="nm">Jonathan Palay</span> · <span class="role">Head of Sales, Reforge Learning</span> · 215.518.0817 · <a href="mailto:jonathan.palay@reforge.com">jonathan.palay@reforge.com</a></div>
+            <div class="rec"><span class="lead">No renewal.</span> Reps disconnected from Slack Connect on 05/29/26. Communicate termination and decide the fate of <a target="_blank" rel="noopener" href="https://intuit-teams.slack.com/archives/C4511F4CU">#reforge-marketing</a> (116 members): archive or repurpose. A Slack manager and plan are needed. Comms before Jul 31.</div>
+            <div class="res"><span class="rlbl">Resources</span>
+              <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1JhqaFr2waXdF6uCchzstsSY70OvH-4bU">Google folder</a>
+              <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/125336">PO US0125336</a>
+              <a class="lnk" target="_blank" rel="noopener" href="https://edu.reforge.com/">Reforge site</a>
+              <a class="lnk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1cOK2a8GJ29D4g5hIzTGaH_Z8Z9nXFto7ty6Zi-GR6nc/edit">Slack manager plan (draft)</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ecard">
+          <div class="top tbd"></div>
+          <div class="body">
+            <div class="ehead"><div><h4>IA — Insights Association</h4><div class="etype">Research membership</div></div><span class="badge tbd"><span class="d"></span>TBD</span></div>
+            <div class="facts">
+              <div class="fact"><span class="k">Contract</span><span class="v">$25,000</span></div>
+              <div class="fact"><span class="k">Credit</span><span class="v">$18,289</span></div>
+              <div class="fact"><span class="k">Renewal</span><span class="v">Dec 31, 2026</span></div>
+            </div>
+            <div class="contact"><span class="nm">Nicole Symelidis</span> · <span class="role">COO</span> · (202) 370-6120 · <a href="mailto:nicole.symelidis@insightsassociation.org">nicole.symelidis@insightsassociation.org</a><br><span class="nm">Meg Collins</span> · <span class="role">Director, Membership</span> · <a href="mailto:meg.collins@insightsassociation.org">meg.collins@insightsassociation.org</a></div>
+            <div class="rec"><span class="lead">Rescope.</span> Review the activation-plan proposal (received 05/25/26) and decide how to use the $18,289 credit — e.g., event sponsorship Sept 15–17 or Ignite Small Business. Dormant, research teams only. Decision held until Sept 2026; can transfer to Christine Chu.</div>
+            <div class="res"><span class="rlbl">Resources</span>
+              <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/10GorM48zIyfaKw2z0y54QSu57rk6W9U_">Google folder</a>
+              <a class="lnk" target="_blank" rel="noopener" href="http://insightsassociation.org">Insights Association</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ecard">
+          <div class="top tbd"></div>
+          <div class="body">
+            <div class="ehead"><div><h4>The Work / WARC / Lions OS</h4><div class="etype">Effy · creative intelligence</div></div><span class="badge tbd"><span class="d"></span>TBD</span></div>
+            <div class="facts">
+              <div class="fact"><span class="k">New proposal</span><span class="v">$90,500</span></div>
+              <div class="fact"><span class="k">2025 spend</span><span class="v">$94,556</span></div>
+              <div class="fact"><span class="k">Due</span><span class="v">Mar 30 / Jul 31, 2026</span></div>
+            </div>
+            <div class="contact"><span class="nm">Amy-Eloise Phoenix</span> · <span class="role">Sr Account Manager, Lions Intelligence</span> · <a href="mailto:Amy.Phoenix@warc.com">Amy.Phoenix@warc.com</a><br><span class="nm">Matt Rattee</span> · <span class="role">AI tool</span> · <a href="mailto:Matt.Rattee@informa.com">Matt.Rattee@informa.com</a> · <span class="nm">James Inglis</span> · <span class="role">MCP</span> · <a href="mailto:James.Inglis@informa.com">James.Inglis@informa.com</a></div>
+            <div class="rec"><span class="lead">Decide — urgent.</span> One of two contracts already expired (Mar 2026); the second is due Jul 31. Underutilized, no visibility into usage. Decide the $90,500 proposal (20 WARC + 20 The Work + 10 Lions OS) — new POs and SOW required — or research a new AI tool with Talent Acquisition. Ask the brand whether to keep it.</div>
+            <div class="res"><span class="rlbl">Resources</span>
+              <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1puskRSjOEI5Loywv1mdKGWKRFV7sW9DP">Google folder</a>
+              <a class="lnk" target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/1MuNhmj7UrsjAp6yTO5V1tQ_TYoBsXGM0/edit">New proposal deck</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ecard">
+          <div class="top tbd"></div>
+          <div class="body">
+            <div class="ehead"><div><h4>MTM — Marketers That Matter</h4><div class="etype">Executive networking platform</div></div><span class="badge tbd"><span class="d"></span>TBD</span></div>
+            <div class="facts">
+              <div class="fact"><span class="k">Contract</span><span class="v">$25,000 · paid</span></div>
+              <div class="fact"><span class="k">Right to refuse</span><span class="v">Oct 31, 2026</span></div>
+              <div class="fact"><span class="k">Due</span><span class="v">Dec 31, 2026</span></div>
+            </div>
+            <div class="contact"><span class="nm">Jennie Stark</span> · <span class="role">VP, Marketers That Matter</span> · <a href="mailto:jennie@marketersthatmatter.com">jennie@marketersthatmatter.com</a></div>
+            <div class="rec"><span class="lead">Rescope.</span> Review the activation plan before the Oct 31 right-to-refuse, then respond to Jennie. No engagement data and no control over content — partners email our employees directly with live-event invites. Audience: CMO, C-level, Directors, Group Managers. Strong exec networking value worth examining.</div>
+            <div class="res"><span class="rlbl">Resources</span>
+              <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1fO0Ac3-P7prSehxaXDmrz_bgBdP_3bTT">Google folder</a>
+              <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/139147">PO US0139147</a>
+              <a class="lnk" target="_blank" rel="noopener" href="https://www.marketersthatmatter.com/">Marketers That Matter</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== TAB 3: VENDORS ===== -->
+    <section class="panel" id="vendors" role="tabpanel">
+      <div class="pcard">
+        <h3>Vendors</h3>
+        <p class="ptag">Six delivery partners — work is largely complete. The action is reconciling final invoices and closing POs. BW Events is the one relationship that continues (Craft website / Swoogo / Docebo). Sort or search below.</p>
+        <div class="controls">
+          <div class="search" style="max-width:300px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+            <input id="vendor-search" type="search" placeholder="Search vendors…" aria-label="Search vendors">
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="dt sortable" id="vendor-table">
+            <thead>
+              <tr>
+                <th class="th-sort" data-key="v">Vendor<span class="ind"></span></th>
+                <th>Status</th>
+                <th class="th-sort" data-key="po">PO value<span class="ind"></span></th>
+                <th>Workstream &amp; deliverables</th>
+                <th>Primary contact</th>
+                <th>Next step</th>
+                <th>Resources</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="item-nm">BW Events LLC</span><div style="color:var(--muted);font-size:12px">Intuit-wide</div></td>
+                <td><span class="badge done"><span class="d"></span>Completed</span></td>
+                <td class="num" data-sort="113225">$113,225 <span style="color:var(--muted)">paid</span></td>
+                <td>RTB — M&amp;C Craft Academy: architecture consulting, API dev, event tech, Craft website (Swoogo), Docebo integration, Skill Hub.</td>
+                <td><span class="nm">Brandon Wernli</span> · (801) 473-3212 · <a href="mailto:brandon@bweventstech.com">brandon@bweventstech.com</a><br><span class="nm">Radhika Kathuria</span> · <a href="mailto:radhika.kathuria@bweventstech.com">radhika.kathuria@bweventstech.com</a><br><span class="nm">Jeremy Kenaston</span> <span class="role">(Intuit CW, Swoogo)</span> · <a href="mailto:jeremy_kenaston@intuit.com">jeremy_kenaston@intuit.com</a></td>
+                <td>Close completed POs; relationship continues for the website. Obtain Swoogo-Admin &amp; Docebo-Admin access.</td>
+                <td><div class="res" style="margin-top:0">
+                  <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1m6hkmc2kK5yEVCQWATdq4e0W-BMoLd3b">Google folder</a>
+                  <a class="lnk" target="_blank" rel="noopener" href="https://growyourcraft.intuit.com/craft/home?i=X-KxbAEreg8pd7030IivDk_8XlizTR76#search">Craft website</a>
+                  <a class="lnk" target="_blank" rel="noopener" href="https://script.google.com/a/macros/intuit.com/s/AKfycbyJSsmOGZQvUdL8IrdxhUPWdqkLN1ss_N5hf-y2tgcL3Z-nCsUTPD2x48GRWkK78Rdc/exec">Skill Hub</a>
+                </div></td>
+              </tr>
+              <tr>
+                <td><span class="item-nm">Studio Rover LLC</span><div style="color:var(--muted);font-size:12px">Intuit-wide · primary creative</div></td>
+                <td><span class="badge done"><span class="d"></span>Completed</span></td>
+                <td class="num" data-sort="62000">$62,000 <span style="color:var(--muted)">paid</span></td>
+                <td>BR1 (WOW) &amp; RTB — design &amp; beautify M&amp;C customer-facing slides and visual assets; works with BW on web pages.</td>
+                <td><span class="nm">Gabe Ruane</span> · <span class="role">Co-founder</span> · 415-944-0470 · <a href="mailto:gabe@studiorover.co">gabe@studiorover.co</a><br><span class="nm">Patrick Craig</span> · <span class="role">Designer</span> · <a href="mailto:patrick@studiorover.co">patrick@studiorover.co</a></td>
+                <td>Close all POs. Verify the duplicate PO (US0144022 vs US0131841, both $10,000) before closing.</td>
+                <td><div class="res" style="margin-top:0">
+                  <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/14OcpPuMyCoqOIbMSfeY2t-OaHFnN7f2-">Google folder</a>
+                  <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/130938">US0130938</a>
+                  <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/137882">US0137882</a>
+                  <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/147884">US0147884</a>
+                  <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/125221">US0125221</a>
+                </div></td>
+              </tr>
+              <tr>
+                <td><span class="item-nm">Merging Path Consulting</span></td>
+                <td><span class="badge done"><span class="d"></span>Completed</span></td>
+                <td class="num" data-sort="23460">$23,460 <span style="color:var(--muted)">pre-paid</span></td>
+                <td>BR1 (WoW) — Peer Coaching Certification: Decision-Making facilitation with Brooks E. Scott.</td>
+                <td><span class="nm">Brooks E. Scott</span> · <span class="role">Executive Coach</span> · 510-662-9800 · <a href="mailto:Brooks@mergingpath.com">Brooks@mergingpath.com</a></td>
+                <td>Completed — close the contract.</td>
+                <td><div class="res" style="margin-top:0">
+                  <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1KlPqGp-BLkfXlXQMkEYDknGZDIRl9ECr">Google folder</a>
+                  <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/145280">PO US0145280</a>
+                </div></td>
+              </tr>
+              <tr>
+                <td><span class="item-nm">Bright Idea Sparks</span><div style="color:var(--muted);font-size:12px">IdeaSparks · Ikezi Kamanu</div></td>
+                <td><span class="badge done"><span class="d"></span>Completed</span></td>
+                <td class="num" data-sort="48763">$48,763 <span style="color:var(--muted)">pending</span></td>
+                <td>BR2 — Live Learning Events (LLE) / AI Transformation.</td>
+                <td><span class="nm">Ikezi Kamanu</span> · 530-346-3359 · <a href="mailto:ekz@ideasparks.io">ekz@ideasparks.io</a></td>
+                <td>Close the contract. Reconcile the partially paid invoice and the pending-approval requisition first. Awaiting PO and final payment.</td>
+                <td><div class="res" style="margin-top:0">
+                  <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1sw1jGYX4Zx7zfYZkIL-C-ug7H7mI-cpZ">Google folder</a>
+                  <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/158122">PO US0158122</a>
+                  <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/requisition_headers/254836">Req 254836</a>
+                  <a class="lnk" target="_blank" rel="noopener" href="https://intuit.coupahost.com/suppliers/show/49548">Coupa supplier</a>
+                </div></td>
+              </tr>
+              <tr>
+                <td><span class="item-nm">Coast Third Films</span><div style="color:var(--muted);font-size:12px">MindSpring LLC</div></td>
+                <td><span class="badge done"><span class="d"></span>Completed</span></td>
+                <td class="num" data-sort="35400">$35,400 <span style="color:var(--muted)">of $59,000</span></td>
+                <td>BR1 (WoW) — Course Creation.</td>
+                <td><span class="nm">Jeff Joanisse</span> · <span class="role">Chief Experience Officer</span> · <a href="mailto:Jeff.Joanisse@gomindspring.com">Jeff.Joanisse@gomindspring.com</a></td>
+                <td>60% of work delivered; this PO is complete and can be closed.</td>
+                <td><div class="res" style="margin-top:0">
+                  <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1m8luEHjqyTnIlOldTeazmO7W93MVHpC6">Google folder</a>
+                  <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/145909">PO US0145909</a>
+                </div></td>
+              </tr>
+              <tr>
+                <td><span class="item-nm">Blue Goose Events &amp; Marketing</span></td>
+                <td><span class="badge done"><span class="d"></span>Completed</span></td>
+                <td class="num" data-sort="36296">$36,296 <span style="color:var(--muted)">+ $45,810 old</span></td>
+                <td>BR2 (AI Transformation) — external event production; Learn &amp; Connect events; organized the Hackathon.</td>
+                <td><span class="nm">Kimberly Goosherst</span> · <span class="role">Owner</span> · <a href="mailto:kimberly@bluegooseevents.com">kimberly@bluegooseevents.com</a><br><span class="nm">Shari Weissner</span> · <a href="mailto:shari@bluegooseevents.com">shari@bluegooseevents.com</a> · <span class="nm">Katie Woywod</span> · <a href="mailto:katie@bluegooseevents.com">katie@bluegooseevents.com</a></td>
+                <td>Completed for the cycle. Align on dates and book early each fiscal year. No performance data — prior relationship via Sylvia Luong.</td>
+                <td><div class="res" style="margin-top:0">
+                  <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1zjU6REzT0eYPeonk9wDnL3Nxxmot7BF3?usp=drive_link">Google folder</a>
+                  <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/149610">PO US0149610</a>
+                  <a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/110680">US0110680 (old)</a>
+                </div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="sowhat"><b>So what:</b> low decision risk, high admin hygiene. Get Swoogo-Admin and Docebo-Admin access from BW before closing anything — those credentials gate the Craft website and the learning catalog.</div>
+      </div>
+    </section>
+
+    <!-- ===== TAB 4: TOOLS ===== -->
+    <section class="panel" id="tools" role="tabpanel">
+      <div class="pcard">
+        <h3>Tools &amp; tech</h3>
+        <p class="ptag">Fifteen tools — search or sort by status. The recurring theme: license cleanup for departed users and re-establishing Intuit admins.</p>
+        <div class="controls">
+          <div class="fgroup">
+            <span class="flabel">Status</span>
+            <button class="chipbtn active" data-tg="all">All</button>
+            <button class="chipbtn" data-tg="stop">Stop</button>
+            <button class="chipbtn" data-tg="tbd">TBD</button>
+            <button class="chipbtn" data-tg="go">Continue</button>
+          </div>
+          <div class="search" style="max-width:260px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+            <input id="tools-search" type="search" placeholder="Search tools…" aria-label="Search tools">
+          </div>
+          <span class="count-note" id="tools-count">15 of 15</span>
+        </div>
+        <div class="table-scroll">
+          <table class="dt sortable" id="tools-table">
+            <thead>
+              <tr>
+                <th class="th-sort" data-key="t">Tool<span class="ind"></span></th>
+                <th class="th-sort" data-key="s">Status<span class="ind"></span></th>
+                <th>POC</th>
+                <th>Primary use &amp; access</th>
+                <th>Next step &amp; resources</th>
+              </tr>
+            </thead>
+            <tbody id="tools-body">
+              <tr data-tg="stop"><td><span class="item-nm">Splash / Cvent</span></td><td data-sort="1"><span class="badge stop"><span class="d"></span>Stop</span></td><td><span class="nm">Jonathan O'Leary</span> · <a href="mailto:Jonathan.Oleary@cvent.com">Jonathan.Oleary@cvent.com</a><br><span class="nm">Rachel Schweitzer</span> · <a href="mailto:Rachel.Schweitzer@cvent.com">Rachel.Schweitzer@cvent.com</a></td><td>Event registration. Access: needs Admin; remove and regroup.</td><td>Terminate; reach out to Rachel &amp; Jonathan. Remove departed licenses (still billed for seats).</td></tr>
+              <tr data-tg="stop"><td><span class="item-nm">M&amp;C Zoom</span></td><td data-sort="1"><span class="badge stop"><span class="d"></span>Stop</span></td><td>Account: marketingcommsld@intuit.com</td><td>Hosts all Live Learning Events — invites, polls, recordings. Access via Zoom.us through the account owner.</td><td>Flagged as not working and no longer needed. Confirm an LLE replacement before retiring, then transfer/rename.</td></tr>
+              <tr data-tg="stop"><td><span class="item-nm">Microsoft Outlook</span></td><td data-sort="1"><span class="badge stop"><span class="d"></span>Stop</span></td><td><a href="mailto:marketingcommscraftdevelopment@intuit.com">marketingcommscraftdevelopment@intuit.com</a></td><td>Teams Outlook email (shared mailbox); Microsoft 365.</td><td>Archive the data. Disconnect the licenses or rename and reuse.</td></tr>
+              <tr data-tg="stop"><td><span class="item-nm">Calendly</span></td><td data-sort="1"><span class="badge stop"><span class="d"></span>Stop</span></td><td>Credentials TBD</td><td>Used for the Peer Coaching Program (closing).</td><td>Get access and disconnect or rescope. Subscription plan unclear.</td></tr>
+              <tr data-tg="tbd"><td><span class="item-nm">Airtable</span></td><td data-sort="2"><span class="badge tbd"><span class="d"></span>TBD</span></td><td><span class="nm">Chelsey Monroe</span> · <a href="mailto:chelsey.monroe@airtable.com">chelsey.monroe@airtable.com</a><br><span class="nm">Zach Tucker</span> · <a href="mailto:zachary.tucker@airtable.com">zachary.tucker@airtable.com</a><br><span class="role">Internal: Cindy Juengling &amp; Kelly Bernie</span></td><td>PgM intake form, scheduling, database. Access: needs Admin; remove and regroup.</td><td>Remove departed licenses (still billed). Data is chaotic — reorganize; could be the backup dataset for the AI website. <span class="res" style="margin-top:6px"><a class="lnk" target="_blank" rel="noopener" href="https://airtable.com/appPKq6MTak5PJw6S/pagSJ7P9v9ldd01Jf">Projects base</a></span></td></tr>
+              <tr data-tg="tbd"><td><span class="item-nm">Sendoso / Shopify</span></td><td data-sort="2"><span class="badge tbd"><span class="d"></span>TBD</span></td><td><span class="nm">Andie Moll</span> · <a href="mailto:Andie.Moll@sendoso.com">Andie.Moll@sendoso.com</a><br><span class="nm">Rob Schotta</span> · <a href="mailto:rob.schotta@sendoso.com">rob.schotta@sendoso.com</a><br><span class="role">Lauren Pinheiro (Intuit)</span></td><td>Gifting + inventory (Intuit-wide). 31 licenses, 30 in use. Space admins Paulina &amp; Sylvia have left.</td><td>Migrate to a new group with reps; remove departed licenses. Close the open 2023 PO ($10,200, unpaid). <span class="res" style="margin-top:6px"><a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1B2Xhd3ZTmnc_tK5Ahe42Ttu5gKWNACRD">Google folder</a><a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/53602">PO US0053602</a><a class="lnk" target="_blank" rel="noopener" href="https://claude.ai/artifacts/latest/ae986943-486d-4be2-9d60-2ba5ed17d600">Inventory dashboard</a><a class="lnk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1N6OilQ2W4JEgq7VitlWB6DxmTRM0tVfZuKpk1vXz8qo/edit">Sendoso overview</a></span></td></tr>
+              <tr data-tg="tbd"><td><span class="item-nm">Swoogo (via BW)</span></td><td data-sort="2"><span class="badge tbd"><span class="d"></span>TBD</span></td><td><span class="nm">Jeremy Kenaston</span> · <a href="mailto:jeremy_kenaston@intuit.com">jeremy_kenaston@intuit.com</a><br><span class="nm">Radhika Kathuria (BW)</span> · <a href="mailto:radhika.kathuria@bweventstech.com">radhika.kathuria@bweventstech.com</a><br><span class="nm">Adam Verdin</span> · <a href="mailto:Adam_Verdin@intuit.com">Adam_Verdin@intuit.com</a></td><td>Event tech / website. The Craft website is live on Swoogo. Access: by invitation, then Intuit SSO.</td><td>Invite new owners to manage environments; remove departed licenses. Connect with Adam Verdin. <span class="res" style="margin-top:6px"><a class="lnk" target="_blank" rel="noopener" href="https://growyourcraft.intuit.com/craft/home?i=X-KxbAEreg8pd7030IivDk_8XlizTR76#search">Craft website</a><a class="lnk" target="_blank" rel="noopener" href="https://id.swoogo.com/?redirect_to=https%3A%2F%2Fwww.swoogo.com%2Fsite%2Fauthorize&login_hint=maria_boukhval%40intuit.com">Swoogo login</a></span></td></tr>
+              <tr data-tg="tbd"><td><span class="item-nm">Docebo</span></td><td data-sort="2"><span class="badge tbd"><span class="d"></span>TBD</span></td><td><span class="nm">Brian Dominguez</span> · <a href="mailto:brian.dominguez@docebo.com">brian.dominguez@docebo.com</a><br><span class="nm">Ben Clark</span> · <a href="mailto:ben.clark@docebo.com">ben.clark@docebo.com</a><br><span class="nm">Adam Verdin</span> · <a href="mailto:Adam_Verdin@intuit.com">Adam_Verdin@intuit.com</a></td><td>LMS / enablement (Intuit-wide). Migration complete. Access: Intuit SSO after invitation.</td><td>Close and manage remaining hours with BW (content published to the catalog). <span class="res" style="margin-top:6px"><a class="lnk" target="_blank" rel="noopener" href="https://growyourcraft.intuit.com/craft/catalog?i=X-KxbAEreg8pd7030IivDk_8XlizTR76">Learning Catalog</a><a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1sUENYivN_YFxuhgaW9vH6DK9GM9apeS7">Google folder</a><a class="lnk po" target="_blank" rel="noopener" href="https://intuit.coupahost.com/order_headers/135114">PO US0135114</a></span></td></tr>
+              <tr data-tg="tbd"><td><span class="item-nm">SurveyMonkey</span></td><td data-sort="2"><span class="badge tbd"><span class="d"></span>TBD</span></td><td><span class="role">Owner: Mos Okediji (group add)</span></td><td>Team-level survey tool within an Intuit-wide license.</td><td>Transition access only. Migrate the team's private group so historical data isn't lost; add members via Mos. <span class="res" style="margin-top:6px"><a class="lnk" target="_blank" rel="noopener" href="https://auth-us.surveymonkey.com/login?state=hKFo2SBRNUR0V0NxYnF2YmNGQVRwRi16S0JTRTRYM2phbEVGQ6FupWxvZ2luo3RpZNkgb2VOQjNPak9QT3JsUWJMa0ZFQmphZXJjU2prTHlBZWyjY2lk2SBzQTM0RFVtUUE0RUlySkM3cTlRdVBDZjFUNzc4QmZMdg&amp;client=sA34DUmQA4EIrJC7q9QuPCf1T778BfLv&amp;protocol=oauth2&amp;prompt=login&amp;scope=openid%20profile%20email&amp;redirect_uri=https%3A%2F%2Fwww.surveymonkey.com%2Flogin%2Fcallback&amp;ut_source=homepage&amp;ut_source3=desktop-header-cta&amp;ui_locales=en&amp;sm.amp_did=b7fc06d6-d9c2-434a-b907-992efb447e92&amp;sm.amp_sid=1780953424665&amp;sm.locale=en&amp;sm.country=US&amp;sm.subdomain=www&amp;sm.social_popup=false&amp;response_type=code&amp;response_mode=query&amp;nonce=MGtybHRpNjZlZ3JIOENoMENCTEtiSzQ1ajEtM2FIX1RxQkVESjZwcWhhfg%3D%3D&amp;code_challenge=r15NJAM9plEewkXdPeI7Xoc2qcguSiXvVxrJK93u6jY&amp;code_challenge_method=S256&amp;auth0Client=eyJuYW1lIjoiYXV0aDAtc3BhLWpzIiwidmVyc2lvbiI6IjIuMC4xIn0%3D#/login">SurveyMonkey (SSO)</a></span></td></tr>
+              <tr data-tg="tbd"><td><span class="item-nm">Google Analytics</span></td><td data-sort="2"><span class="badge tbd"><span class="d"></span>TBD</span></td><td><span class="role">Request via Jeremy (Swoogo); external admin Radhika (BW)</span></td><td>Tracks Keep Crafting site. Tracking ID: G-443BSZ3J23. Ensure menu integrity when Rohini pushes newsletter updates.</td><td>Needs a new Intuit Admin — author is view-only and prior admins (incl. Paulina) have left. <span class="res" style="margin-top:6px"><a class="lnk" target="_blank" rel="noopener" href="https://analytics.google.com/analytics/web/">Google Analytics</a></span></td></tr>
+              <tr data-tg="tbd"><td><span class="item-nm">Workato</span></td><td data-sort="2"><span class="badge tbd"><span class="d"></span>TBD</span></td><td><span class="role">IT / T4I Access Portal</span></td><td>Slack automation for event communications (Intuit-wide). Access via IT Portal + training.</td><td>Rescope. Update licenses and access via the IT Portal; remove departed users.</td></tr>
+              <tr data-tg="tbd"><td><span class="item-nm">Credly</span></td><td data-sort="2"><span class="badge tbd"><span class="d"></span>TBD</span></td><td><span class="role">Adam Verdin / Sylvia Luong</span></td><td>Digital badge issuance; badges awarded monthly.</td><td>Confirm ownership and ongoing need.</td></tr>
+              <tr data-tg="tbd"><td><span class="item-nm">Intuit Insights &amp; Slack</span></td><td data-sort="2"><span class="badge tbd"><span class="d"></span>TBD</span></td><td><span class="role">Insights Intuit team &amp; Slack admins</span></td><td>MCLRC web pages (outdated) + Slack channels.</td><td>Remove/adjust outdated pages; assign admins &amp; schedule maintenance. <span class="res" style="margin-top:6px"><a class="lnk" target="_blank" rel="noopener" href="https://sites.intuit.com/home/ls/content/5014469611225088/department-pages-all/transformation-office/marketing-and-communications-learning-and-development">MCLRC page</a><a class="lnk" target="_blank" rel="noopener" href="https://sites.intuit.com/home/ls/content/4862765518922165/department-pages-all/intuit-platform-marketing">Platform Marketing</a><a class="lnk" target="_blank" rel="noopener" href="https://insight.app.intuit.com/resources/learning-and-training">Learning &amp; Training</a><a class="lnk slack" target="_blank" rel="noopener" href="https://intuit-teams.slack.com/archives/C4511F4CU">#mktg-comms-all</a></span></td></tr>
+              <tr data-tg="go"><td><span class="item-nm">Google Workspace</span></td><td data-sort="3"><span class="badge go"><span class="d"></span>Continue</span></td><td><span class="nm">Grace Scherbarth (EA)</span><br><span class="role">Shared inbox: marketingcommscraftdevelopment@intuit.com</span></td><td>Drive, Docs, Calendar, shared inbox. Access via Identity Manager.</td><td>Core infrastructure. Maintain access via Identity Manager (EasyCare ticket for mailbox); transition only.</td></tr>
+              <tr data-tg="go"><td><span class="item-nm">Workday</span></td><td data-sort="3"><span class="badge go"><span class="d"></span>Continue</span></td><td><span class="role">Intuit IT</span></td><td>TAM list / Intuit Public Directory roster. Access via Intuit SSO.</td><td>Transition only. Pull the Public Directory monthly into the roster sheet plus the leadership sheet.</td></tr>
+              <tr class="empty-row" id="tools-empty" style="display:none"><td colspan="5">No tools match.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TAB 5: WORKSTREAMS ===== -->
+    <section class="panel" id="streams" role="tabpanel">
+      <div class="sec-head" style="margin-top:0"><h2 style="font-size:18px"><span class="marker">RTB</span>Run-the-Business workstreams</h2><span class="desc">Five workstreams at a glance, broken to seven programs. Every one needs an owner.</span></div>
+      <div class="cardgrid">
+
+        <div class="ecard"><div class="top tbd"></div><div class="body">
+          <div class="ehead"><div><h4>Onboarding</h4><div class="etype">Welcome experience for new M&amp;Cs</div></div><span class="badge tbd"><span class="d"></span>TBD</span></div>
+          <div style="margin-top:14px"><span class="owner-flag">Owner: TBD (finding)</span></div>
+          <div class="rec"><span class="lead">What's left:</span> define &amp; document a new onboarding process across all orgs; confirm welcome-swag licensing (Sendoso). <span class="lead">Note:</span> recommend moving onboarding to the culture initiative led by Katie P.</div>
+          <div class="res"><span class="rlbl">Resources</span>
+            <a class="lnk" target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/1rtBcDQEHIkq2JQTkLi3Fapx3Mds8dSVMoqvl7h-_0_I/edit?usp=sharing">Welcome Presentation</a>
+            <a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/1B2Xhd3ZTmnc_tK5Ahe42Ttu5gKWNACRD">Onboarding folder</a>
+            <a class="lnk" target="_blank" rel="noopener" href="https://docs.google.com/document/d/1N6OilQ2W4JEgq7VitlWB6DxmTRM0tVfZuKpk1vXz8qo/edit">Sendoso overview</a>
+          </div>
+        </div></div>
+
+        <div class="ecard"><div class="top tbd"></div><div class="body">
+          <div class="ehead"><div><h4>GenAI — Claude Skills Hub</h4><div class="etype">Skills library on the Craft website</div></div><span class="badge tbd"><span class="d"></span>TBD</span></div>
+          <div style="margin-top:14px"><span class="owner-flag">Owner: TBD (finding)</span></div>
+          <div class="rec"><span class="lead">What's left:</span> document owner, cadence &amp; distribution. Migrate to GitHub for easier updates. <span class="lead">Note:</span> the Google Sheet &amp; App Script are owned by a deactivated user — transfer via the Workspace super admin (IT).</div>
+          <div class="res"><span class="rlbl">Resources</span>
+            <a class="lnk" target="_blank" rel="noopener" href="https://script.google.com/a/macros/intuit.com/s/AKfycbyJSsmOGZQvUdL8IrdxhUPWdqkLN1ss_N5hf-y2tgcL3Z-nCsUTPD2x48GRWkK78Rdc/exec">Claude Skills Hub</a>
+          </div>
+        </div></div>
+
+        <div class="ecard"><div class="top tbd"></div><div class="body">
+          <div class="ehead"><div><h4>GenAI — Digest</h4><div class="etype">Monthly newsletter</div></div><span class="badge tbd"><span class="d"></span>TBD</span></div>
+          <div style="margin-top:14px"><span class="owner-flag">Owner: TBD (finding)</span></div>
+          <div class="rec"><span class="lead">What's left:</span> monthly cadence, not yet transferred. Capture owner, cadence &amp; resources before handoff.</div>
+          <div class="res"><span class="rlbl">Resources</span>
+            <a class="lnk" target="_blank" rel="noopener" href="https://growyourcraft.intuit.com/craft/Newsletter?i=X-KxbAEreg8pd7030IivDk_8XlizTR76">GenAI Digest</a>
+          </div>
+        </div></div>
+
+        <div class="ecard"><div class="top stop"></div><div class="body">
+          <div class="ehead"><div><h4>Peer Coaching</h4><div class="etype">Certification &amp; booking program</div></div><span class="badge stop"><span class="d"></span>Stop</span></div>
+          <div style="margin-top:14px"><span class="owner-flag">Owner: TBD (finding)</span></div>
+          <div class="rec"><span class="lead">What's left:</span> remove the program from the website and disconnect the Calendly booking links. <span class="lead">Note:</span> deprioritized — low engagement despite reported interest.</div>
+          <div class="res"><span class="rlbl">Resources</span>
+            <a class="lnk" target="_blank" rel="noopener" href="https://growyourcraft.intuit.com/craft/learn-teach-grow?i=X-KxbAEreg8pd7030IivDk_8XlizTR76">Peer Coaching</a>
+            <a class="lnk" target="_blank" rel="noopener" href="https://growyourcraft.intuit.com/craft/peer-coach-directory?i=X-KxbAEreg8pd7030IivDk_8XlizTR76">Coach Directory</a>
+          </div>
+        </div></div>
+
+        <div class="ecard"><div class="top go"></div><div class="body">
+          <div class="ehead"><div><h4>Learning Experiences</h4><div class="etype">Craft website, LLE &amp; intake</div></div><span class="badge go"><span class="d"></span>Continue</span></div>
+          <div style="margin-top:14px"><span class="owner-flag">Owner: TBD (finding)</span></div>
+          <div class="rec"><span class="lead">What's left:</span> maintain the Craft website (Swoogo); replace LLE hosting (M&amp;C Zoom retiring); migrate the intake form off the retired MarketingDev automation to Google Drive.</div>
+          <div class="res"><span class="rlbl">Resources</span>
+            <a class="lnk" target="_blank" rel="noopener" href="https://growyourcraft.intuit.com/craft/home">Craft website</a>
+            <a class="lnk" target="_blank" rel="noopener" href="https://airtable.com/appLABKQP8jXwvm1T/shrOGwWPfPXJscweT">Intake Form (Airtable)</a>
+          </div>
+        </div></div>
+
+        <div class="ecard"><div class="top go"></div><div class="body">
+          <div class="ehead"><div><h4>Strategic Partnerships</h4><div class="etype">See Strategic Partners tab</div></div><span class="badge go"><span class="d"></span>Continue</span></div>
+          <div style="margin-top:14px"><span class="owner-flag departed">Prior: Emily Valencia (departed)</span></div>
+          <div class="rec"><span class="lead">What's left:</span> execute per-partner decisions — renew ANA; decide IA, The Work &amp; MTM; stop LinkedIn &amp; Reforge.</div>
+        </div></div>
+
+        <div class="ecard"><div class="top tbd"></div><div class="body">
+          <div class="ehead"><div><h4>Tools &amp; Tech</h4><div class="etype">See Tools &amp; Tech tab</div></div><span class="badge tbd"><span class="d"></span>TBD</span></div>
+          <div style="margin-top:14px"><span class="owner-flag">Owner: TBD (finding)</span></div>
+          <div class="rec"><span class="lead">What's left:</span> license cleanup for departed users; re-establish admin owners; execute per-tool actions. Decide the future of the Craft website (some links inactive) and the comms channels (Slack, Outlook).</div>
+          <div class="res"><span class="rlbl">Resources</span>
+            <a class="lnk" target="_blank" rel="noopener" href="https://growyourcraft.intuit.com/craft/home?i=X-KxbAEreg8pd7030IivDk_8XlizTR76">Craft website</a>
+          </div>
+        </div></div>
+
+      </div>
+    </section>
+
+    <!-- ===== TAB 6: DASHBOARDS & ACCESS ===== -->
+    <section class="panel" id="dash" role="tabpanel">
+      <div class="pcard">
+        <h3>Dashboards &amp; codes</h3>
+        <p class="ptag">Open action across the board: access to all shared folders, admin seats, tools and dashboards must be transitioned.</p>
+        <div class="table-scroll">
+          <table class="dt">
+            <thead><tr><th>Item</th><th>Status</th><th>Detail / ID</th><th>Action</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><span class="item-nm">FY26 AI Adoption dashboard</span></td><td><span class="badge go"><span class="d"></span>Continue</span></td>
+                <td><a class="lnk" target="_blank" rel="noopener" href="https://marketingcraftdevcapabilities.github.io/fy26_ai_adoption_dashboard/">github.io/fy26_ai_adoption_dashboard</a></td>
+                <td>Transfer ownership Maria → <b>Lisa Rodriguez</b>.</td>
+                <td>Transfer initiated on 06/04/2026.</td>
+              </tr>
+              <tr>
+                <td><span class="item-nm">Google Analytics tracking</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td>
+                <td class="num">G-443BSZ3J23 · <a class="lnk" target="_blank" rel="noopener" href="https://analytics.google.com/analytics/web/">GA</a></td>
+                <td>Re-grant admin.</td>
+                <td>Tracks the Keep Crafting site. External admin Radhika (BW); re-establish an Intuit admin — prior admins have left.</td>
+              </tr>
+              <tr>
+                <td><span class="item-nm">LinkedIn Activation Plan dashboard</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td>
+                <td><a class="lnk" target="_blank" rel="noopener" href="https://drive.google.com/file/d/1pHh3prcmaGevSYaBheuckFRqFOkZikJp/view">Dashboard file</a></td>
+                <td>Hand off for FY27.</td>
+                <td>Contact Maria Boukhval to obtain it. Tied to the LinkedIn rescope.</td>
+              </tr>
+              <tr>
+                <td><span class="item-nm">Sendoso inventory dashboard</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td>
+                <td><a class="lnk" target="_blank" rel="noopener" href="https://claude.ai/artifacts/latest/ae986943-486d-4be2-9d60-2ba5ed17d600">Claude artifact</a></td>
+                <td>Migrate with reps.</td>
+                <td>Inventory list and stock dashboard. Migrate to a new group with Sendoso reps.</td>
+              </tr>
+              <tr>
+                <td><span class="item-nm">PgM intake / project base</span></td><td><span class="badge tbd"><span class="d"></span>TBD</span></td>
+                <td><a class="lnk" target="_blank" rel="noopener" href="https://airtable.com/appPKq6MTak5PJw6S/pagSJ7P9v9ldd01Jf">Airtable base</a></td>
+                <td>Reorganize / migrate.</td>
+                <td>Move the intake form to Google Drive off the retired MarketingDev automation.</td>
+              </tr>
+              <tr>
+                <td><span class="item-nm">All other dashboards</span></td><td><span class="badge go"><span class="d"></span>Continue</span></td>
+                <td class="num">Various</td>
+                <td>Transfer access.</td>
+                <td>Make all dashboards transfer. Confirm ownership and admin seats for each as access is handed over.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="pcard">
+        <h3>Key people</h3>
+        <p class="ptag">Who's coming in, who's left, and who to pull in for specific decisions.</p>
+        <div class="people">
+          <div class="pbox">
+            <div class="ph">Incoming &amp; preparers</div>
+            <div class="pn">Lisa Rodriguez</div><div class="pd">FY26 AI Adoption dashboard owner (transfer initiated 06/04)</div>
+            <ul><li>Maria Boukhval — prepared this guide</li><li>Mos Okediji — on whose behalf; SurveyMonkey group owner</li></ul>
+          </div>
+          <div class="pbox">
+            <div class="ph">Access risk — departed</div>
+            <div class="pn">Sylvia Luong</div><div class="pd">Held LinkedIn group, Sendoso, Credly &amp; vendor relationships</div>
+            <ul><li>Emily Valencia — prior Strategic Partnerships owner</li><li>Paulina — prior Sendoso &amp; Analytics admin</li></ul>
+          </div>
+          <div class="pbox">
+            <div class="ph">Pull in for decisions</div>
+            <div class="pn">Christine Chu</div><div class="pd">Can own the IA — Insights Association decision</div>
+            <ul><li>Katie P — culture initiative (onboarding)</li><li><a href="mailto:Adam_Verdin@intuit.com">Adam Verdin</a> — Swoogo / Docebo / Credly</li><li><a href="mailto:jeremy_kenaston@intuit.com">Jeremy Kenaston</a> — Swoogo (Intuit)</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Marketing Craft Development &amp; Capabilities</b> — Transition Guide FY2026/27 · Confidential — Internal · Prepared Jun 4, 2026 · Source last updated Jun 15, 2026.<br>
+    Mirrors the Transition Guide source document with all original links preserved. Figures shown where listed in the source; items marked TBD or N/A have no value recorded. Prepared by Maria Boukhval on behalf of Mos Okediji for the Chief Marketing Officer.
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Tabs + hash routing ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+  var valid = tabs.map(function(t){return t.getAttribute('data-tab');});
+
+  function activate(id, focus, push){
+    if(valid.indexOf(id) < 0) id = 'matrix';
+    tabs.forEach(function(t){
+      var on = t.getAttribute('data-tab') === id;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      if(on && focus) t.focus();
+    });
+    panels.forEach(function(p){ p.classList.toggle('active', p.id === id); });
+    if(push && history.replaceState){ history.replaceState(null,'','#'+id); }
+  }
+  tabs.forEach(function(tab, i){
+    tab.addEventListener('click', function(){ activate(tab.getAttribute('data-tab'), false, true); });
+    tab.addEventListener('keydown', function(e){
+      var idx = i;
+      if(e.key==='ArrowRight'||e.key==='ArrowDown'){ idx=(i+1)%tabs.length; e.preventDefault(); }
+      else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ idx=(i-1+tabs.length)%tabs.length; e.preventDefault(); }
+      else if(e.key==='Home'){ idx=0; e.preventDefault(); }
+      else if(e.key==='End'){ idx=tabs.length-1; e.preventDefault(); }
+      else return;
+      activate(tabs[idx].getAttribute('data-tab'), true, true);
+    });
+  });
+  if(location.hash){ activate(location.hash.slice(1), false, false); }
+
+  /* ---------- Generic sortable tables ---------- */
+  function cellVal(td){
+    if(!td) return '';
+    var ds = td.getAttribute('data-sort');
+    if(ds !== null){ var n = parseFloat(ds); return isNaN(n) ? ds.toLowerCase() : n; }
+    return td.textContent.trim().toLowerCase();
+  }
+  Array.prototype.slice.call(document.querySelectorAll('table.sortable')).forEach(function(table){
+    var heads = Array.prototype.slice.call(table.querySelectorAll('th.th-sort'));
+    heads.forEach(function(th){
+      th.addEventListener('click', function(){
+        var tbody = table.querySelector('tbody');
+        if(table.id==='matrix-table' && typeof closeAllDrawers==='function'){ closeAllDrawers(); }
+        var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr')).filter(function(r){return !r.classList.contains('empty-row') && !r.classList.contains('mdetail');});
+        var dir = th.classList.contains('asc') ? 'desc' : 'asc';
+        heads.forEach(function(h){ h.classList.remove('asc','desc'); });
+        th.classList.add(dir);
+        var idx = Array.prototype.indexOf.call(th.parentNode.children, th);
+        rows.sort(function(a,b){
+          var av = cellVal(a.children[idx]), bv = cellVal(b.children[idx]);
+          if(av < bv) return dir==='asc' ? -1 : 1;
+          if(av > bv) return dir==='asc' ? 1 : -1;
+          return 0;
+        });
+        rows.forEach(function(r){ tbody.appendChild(r); });
+      });
+    });
+  });
+
+  /* ---------- Decision matrix: filters + search + live analytics + drill-downs ---------- */
+  var mRows = Array.prototype.slice.call(document.querySelectorAll('#matrix-body tr')).filter(function(r){return !r.classList.contains('empty-row');});
+  var mEmpty  = document.getElementById('matrix-empty');
+  var mCount  = document.getElementById('matrix-count');
+  var mSearch = document.getElementById('matrix-search');
+  var mReset  = document.getElementById('matrix-reset');
+  var mState  = { status:'all', cat:'all', q:'', due:null };
+
+  var SLABEL = { go:'Continue', stop:'Stop', tbd:'TBD', done:'Completed' };
+  var CLABEL = { partner:'Partners', vendor:'Vendors', tool:'Tools' };
+  var DUELABEL = { '20260430':'Apr 30', '20260529':'May 29', '20260731':'Jul 31', '20260816':'Aug 16', '20261231':'Dec 31' };
+
+  // Map each matrix item to its detail source (partner card, or vendor/tool table row).
+  var ITEM = {
+    'ANA':{type:'partner',name:'ANA'},
+    'LinkedIn Learning Hub':{type:'partner',name:'LinkedIn Learning Hub'},
+    'Reforge':{type:'partner',name:'Reforge'},
+    'IA \u2014 Insights Association':{type:'partner',name:'IA \u2014 Insights Association'},
+    'The Work / WARC / Lions OS':{type:'partner',name:'The Work / WARC / Lions OS'},
+    'MTM':{type:'partner',name:'MTM \u2014 Marketers That Matter'},
+    'BW Events':{type:'vendor',name:'BW Events LLC'},
+    'Bright Idea Sparks \u00B7 Ikezi Kamanu':{type:'vendor',name:'Bright Idea Sparks'},
+    'Sendoso':{type:'tool',name:'Sendoso / Shopify'},
+    'Splash / Cvent':{type:'tool',name:'Splash / Cvent'},
+    'Swoogo':{type:'tool',name:'Swoogo (via BW)'},
+    'Docebo':{type:'tool',name:'Docebo'},
+    'Google Analytics':{type:'tool',name:'Google Analytics'},
+    'Workato':{type:'tool',name:'Workato'},
+    'Intuit Insights web & Slack':{type:'tool',name:'Intuit Insights & Slack'},
+    'M&C Zoom':{type:'tool',name:'M&C Zoom'},
+    'Outlook':{type:'tool',name:'Microsoft Outlook'},
+    'Google WS':{type:'tool',name:'Google Workspace'}
+  };
+
+  function rowName(r){ var n = r.children[0].querySelector('.item-nm'); return n ? n.textContent.trim() : ''; }
+  function setTxt(id, v){ var el = document.getElementById(id); if(el) el.textContent = v; }
+  function fmtMoney(n){ return n >= 10000 ? '$' + Math.round(n/1000) + 'K' : '$' + n.toLocaleString('en-US'); }
+
+  function syncChips(){
+    document.querySelectorAll('.chipbtn[data-fg="status"]').forEach(function(c){ c.classList.toggle('active', c.getAttribute('data-val')===mState.status); });
+    document.querySelectorAll('.chipbtn[data-fg="cat"]').forEach(function(c){ c.classList.toggle('active', c.getAttribute('data-val')===mState.cat); });
+  }
+
+  // Recompute the live analytics strip from whatever rows are currently visible.
+  function refreshStrip(){
+    var inView = 0, value = 0, tbd = 0, cliff = 0;
+    mRows.forEach(function(r){
+      if(r.style.display === 'none') return;
+      inView++;
+      var b = parseFloat(r.children[3].getAttribute('data-sort')); if(!isNaN(b) && b > 0) value += b;
+      if(r.getAttribute('data-status') === 'tbd') tbd++;
+      var d = parseInt(r.children[4].getAttribute('data-sort'), 10);
+      if(!isNaN(d) && d >= 20260615 && d <= 20260731) cliff++;
+    });
+    setTxt('ms-count', inView);
+    setTxt('ms-value', fmtMoney(value));
+    setTxt('ms-tbd', tbd);
+    setTxt('ms-cliff', cliff);
+
+    var parts = [];
+    if(mState.status !== 'all') parts.push(SLABEL[mState.status] || mState.status);
+    if(mState.cat !== 'all')    parts.push(CLABEL[mState.cat] || mState.cat);
+    if(mState.due)              parts.push('due ' + (DUELABEL[mState.due] || mState.due));
+    if(mState.q)                parts.push('matching \u201C' + mState.q + '\u201D');
+    setTxt('ms-ctx', parts.length ? ('Filtered to ' + parts.join(' \u00B7 ') + ' \u2014 ' + inView + ' of ' + mRows.length) : ('Showing all ' + mRows.length + ' items'));
+    if(mReset) mReset.hidden = (parts.length === 0);
+  }
+
+  // ---- Drill-down drawers: clone the real contacts & links from the detail panels ----
+  function buildDrawer(name){
+    var wrap = document.createElement('div');
+    wrap.className = 'mdetail-inner';
+    var info = ITEM[name];
+    if(!info) return wrap;
+    if(info.type === 'partner'){
+      var body = null;
+      document.querySelectorAll('#partners .ecard').forEach(function(c){
+        var h = c.querySelector('h4');
+        if(h && h.textContent.trim() === info.name) body = c.querySelector('.body') || c;
+      });
+      if(body){
+        ['.contact','.rec','.res'].forEach(function(sel){
+          var node = body.querySelector(sel);
+          if(node) wrap.appendChild(node.cloneNode(true));
+        });
+      }
+    } else {
+      var table = document.querySelector(info.type === 'vendor' ? '#vendor-table' : '#tools-table');
+      if(table){
+        var ths = Array.prototype.slice.call(table.querySelectorAll('thead th')).map(function(th){ return th.textContent.replace(/\s+/g,' ').trim(); });
+        var rowEl = null;
+        table.querySelectorAll('tbody tr').forEach(function(tr){
+          var nm = tr.querySelector('.item-nm');
+          if(nm && nm.textContent.trim() === info.name) rowEl = tr;
+        });
+        if(rowEl){
+          var dl = document.createElement('div'); dl.className = 'mdl';
+          var cells = rowEl.children;
+          for(var i = 2; i < cells.length; i++){
+            var item = document.createElement('div'); item.className = 'mdl-item';
+            var k = document.createElement('div'); k.className = 'mdl-k'; k.textContent = ths[i] || '';
+            var v = document.createElement('div'); v.className = 'mdl-v';
+            var cl = cells[i].cloneNode(true);
+            while(cl.firstChild){ v.appendChild(cl.firstChild); }
+            item.appendChild(k); item.appendChild(v); dl.appendChild(item);
+          }
+          wrap.appendChild(dl);
+        }
+      }
+    }
+    return wrap;
+  }
+
+  function closeAllDrawers(){
+    document.querySelectorAll('#matrix-body tr.mdetail').forEach(function(d){ d.parentNode.removeChild(d); });
+    mRows.forEach(function(r){ r.classList.remove('open'); if(r.classList.contains('mrow')) r.setAttribute('aria-expanded','false'); });
+  }
+  function toggleDrawer(row){
+    var next = row.nextElementSibling;
+    if(next && next.classList.contains('mdetail')){
+      next.parentNode.removeChild(next);
+      row.classList.remove('open'); row.setAttribute('aria-expanded','false');
+      return;
+    }
+    var dr = document.createElement('tr'); dr.className = 'mdetail';
+    var td = document.createElement('td'); td.colSpan = 6;
+    td.appendChild(buildDrawer(rowName(row)));
+    dr.appendChild(td);
+    row.parentNode.insertBefore(dr, row.nextSibling);
+    row.classList.add('open'); row.setAttribute('aria-expanded','true');
+  }
+
+  // Make rows that have a detail source expandable (chevron + keyboard + click).
+  mRows.forEach(function(r){
+    var nm = rowName(r);
+    if(!ITEM[nm]) return;
+    r.classList.add('mrow');
+    r.setAttribute('tabindex','0');
+    r.setAttribute('aria-expanded','false');
+    r.setAttribute('title','Show contacts & links for ' + nm);
+    var tog = document.createElement('span');
+    tog.className = 'row-toggle'; tog.setAttribute('aria-hidden','true'); tog.textContent = '\u203A';
+    r.children[0].insertBefore(tog, r.children[0].firstChild);
+    r.addEventListener('click', function(e){ if(e.target.closest('a')) return; toggleDrawer(r); });
+    r.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleDrawer(r); } });
+  });
+
+  function applyMatrix(){
+    closeAllDrawers();
+    var shown = 0;
+    mRows.forEach(function(r){
+      var ok = (mState.status==='all' || r.getAttribute('data-status')===mState.status)
+            && (mState.cat==='all' || r.getAttribute('data-cat')===mState.cat)
+            && (mState.due===null || r.children[4].getAttribute('data-sort')===mState.due)
+            && (!mState.q || r.textContent.toLowerCase().indexOf(mState.q) >= 0);
+      r.style.display = ok ? '' : 'none';
+      if(ok) shown++;
+    });
+    if(mEmpty) mEmpty.style.display = shown ? 'none' : '';
+    mCount.textContent = shown + ' of ' + mRows.length;
+    syncChips();
+    refreshStrip();
+  }
+
+  document.querySelectorAll('.chipbtn[data-fg]').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      mState[chip.getAttribute('data-fg')] = chip.getAttribute('data-val');
+      mState.due = null;
+      applyMatrix();
+    });
+  });
+  if(mSearch) mSearch.addEventListener('input', function(){ mState.q = this.value.trim().toLowerCase(); applyMatrix(); });
+  if(mReset) mReset.addEventListener('click', function(){
+    mState = { status:'all', cat:'all', q:'', due:null };
+    if(mSearch) mSearch.value = '';
+    applyMatrix();
+  });
+
+  function focusMatrix(status, cat){
+    mState.status = status || 'all';
+    mState.cat = cat || 'all';
+    mState.due = null; mState.q = '';
+    if(mSearch) mSearch.value = '';
+    activate('matrix', false, true);
+    applyMatrix();
+    var el = document.getElementById('matrix-table');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  function focusMatrixDue(due){
+    mState.status = 'all'; mState.cat = 'all'; mState.q = ''; mState.due = due;
+    if(mSearch) mSearch.value = '';
+    activate('matrix', false, true);
+    applyMatrix();
+    var el = document.getElementById('matrix-table');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  // donut + legend  ->  filter by status
+  document.querySelectorAll('.donut .seg, .dlegend .row').forEach(function(el){
+    el.addEventListener('click', function(){ focusMatrix(el.getAttribute('data-status'), 'all'); });
+  });
+  // cross-tab cells  ->  filter by status + category
+  document.querySelectorAll('#xtab .xcell').forEach(function(cell){
+    if(cell.disabled) return;
+    cell.addEventListener('click', function(){ focusMatrix(cell.getAttribute('data-status'), cell.getAttribute('data-cat')); });
+  });
+  // contract-calendar markers  ->  filter by contract-due date
+  document.querySelectorAll('.tl-stop').forEach(function(stop){
+    var d = stop.querySelector('.tl-date'); if(!d) return;
+    var label = d.textContent.split('\u00B7')[0].trim();
+    var due = DUELABEL ? Object.keys(DUELABEL).filter(function(k){ return DUELABEL[k] === label; })[0] : null;
+    if(!due) return;
+    if(!mRows.some(function(r){ return r.children[4].getAttribute('data-sort') === due; })) return;
+    stop.classList.add('tl-click');
+    stop.setAttribute('tabindex','0');
+    stop.setAttribute('role','button');
+    stop.setAttribute('title','Filter the matrix to contracts due ' + label);
+    stop.addEventListener('click', function(){ focusMatrixDue(due); });
+    stop.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); focusMatrixDue(due); } });
+  });
+
+  refreshStrip();
+
+  /* ---------- Decision planner: what-if disposition modelling ---------- */
+  (function(){
+    var host = document.getElementById('plan-rows');
+    if(!host) return;
+    var DLABEL = { stop:'Stop', keep:'Keep', undecided:'Undecided' };
+    var STLABEL = { stop:'Stop', tbd:'TBD', go:'Continue', done:'Completed' };
+    var DEF = { stop:'stop', go:'keep', tbd:'undecided', done:'keep' };
+    var items = [];
+    mRows.forEach(function(r){
+      var budget = parseFloat(r.children[3].getAttribute('data-sort'));
+      var status = r.getAttribute('data-status');
+      if(isNaN(budget) || budget <= 0 || status === 'done') return; // forward-looking $ decisions only
+      var catEl = r.children[1].querySelector('.badge');
+      items.push({ name:rowName(r), cat: catEl ? catEl.textContent.trim() : '', status:status, budget:budget, disp: DEF[status] || 'undecided' });
+    });
+
+    function money(n){ return n >= 10000 ? '$' + Math.round(n/1000) + 'K' : '$' + n.toLocaleString('en-US'); }
+    function plural(n, w){ return n + ' ' + w + (n === 1 ? '' : 's'); }
+
+    function recompute(){
+      var sum = {stop:0,keep:0,undecided:0}, cnt = {stop:0,keep:0,undecided:0};
+      items.forEach(function(it){ sum[it.disp] += it.budget; cnt[it.disp]++; });
+      setTxt('pt-stop', money(sum.stop)); setTxt('pt-stop-n', plural(cnt.stop,'contract'));
+      setTxt('pt-keep', money(sum.keep)); setTxt('pt-keep-n', plural(cnt.keep,'contract'));
+      setTxt('pt-tbd',  money(sum.undecided)); setTxt('pt-tbd-n', plural(cnt.undecided,'contract'));
+    }
+    function paint(seg, disp){
+      Array.prototype.slice.call(seg.children).forEach(function(b){
+        var on = b.getAttribute('data-d') === disp;
+        b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+
+    items.forEach(function(it){
+      var row = document.createElement('div'); row.className = 'prow';
+      var nm = document.createElement('div'); nm.className = 'prow-nm';
+      nm.appendChild(document.createTextNode(it.name));
+      var ct = document.createElement('span'); ct.className = 'prow-cat'; ct.textContent = it.cat; nm.appendChild(ct);
+      var val = document.createElement('div'); val.className = 'prow-val'; val.textContent = money(it.budget);
+      var seg = document.createElement('div'); seg.className = 'seg3'; seg.setAttribute('role','group'); seg.setAttribute('aria-label','Disposition for ' + it.name);
+      ['stop','keep','undecided'].forEach(function(d){
+        var b = document.createElement('button'); b.type = 'button'; b.setAttribute('data-d', d); b.textContent = DLABEL[d];
+        b.addEventListener('click', function(){ it.disp = d; paint(seg, d); recompute(); });
+        seg.appendChild(b);
+      });
+      paint(seg, it.disp);
+      row.appendChild(nm); row.appendChild(val); row.appendChild(seg);
+      host.appendChild(row);
+      it._seg = seg;
+    });
+    recompute();
+
+    var reset = document.getElementById('plan-reset');
+    if(reset) reset.addEventListener('click', function(){
+      items.forEach(function(it){ it.disp = DEF[it.status] || 'undecided'; paint(it._seg, it.disp); });
+      recompute();
+    });
+
+    var csv = document.getElementById('plan-csv');
+    if(csv) csv.addEventListener('click', function(){
+      var sum = {stop:0,keep:0,undecided:0};
+      items.forEach(function(it){ sum[it.disp] += it.budget; });
+      var rows = [['Item','Category','Current recommendation','Annual value (USD)','Your decision']];
+      items.forEach(function(it){ rows.push([it.name, it.cat, STLABEL[it.status] || it.status, it.budget, DLABEL[it.disp]]); });
+      rows.push([]);
+      rows.push(['Recover by stopping','','', sum.stop, '']);
+      rows.push(['Committed to keep','','', sum.keep, '']);
+      rows.push(['Still undecided','','', sum.undecided, '']);
+      var text = rows.map(function(r){ return r.map(function(c){ var v = String(c); return /[",\n]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; }).join(','); }).join('\r\n');
+      var blob = new Blob([text], {type:'text/csv;charset=utf-8'});
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a'); a.href = url; a.download = 'transition-decision-plan.csv';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    });
+  })();
+
+  /* ---------- Tools: filter + search ---------- */
+  var tRows = Array.prototype.slice.call(document.querySelectorAll('#tools-body tr')).filter(function(r){return !r.classList.contains('empty-row');});
+  var tEmpty = document.getElementById('tools-empty');
+  var tCount = document.getElementById('tools-count');
+  var tState = { tg:'all', q:'' };
+  function applyTools(){
+    var shown = 0;
+    tRows.forEach(function(r){
+      var ok = (tState.tg==='all'||r.getAttribute('data-tg')===tState.tg)
+            && (!tState.q || r.textContent.toLowerCase().indexOf(tState.q) >= 0);
+      r.style.display = ok ? '' : 'none';
+      if(ok) shown++;
+    });
+    if(tEmpty) tEmpty.style.display = shown ? 'none' : '';
+    tCount.textContent = shown + ' of ' + tRows.length;
+    document.querySelectorAll('.chipbtn[data-tg]').forEach(function(c){ c.classList.toggle('active', c.getAttribute('data-tg')===tState.tg); });
+  }
+  document.querySelectorAll('.chipbtn[data-tg]').forEach(function(chip){
+    chip.addEventListener('click', function(){ tState.tg = chip.getAttribute('data-tg'); applyTools(); });
+  });
+  var tSearch = document.getElementById('tools-search');
+  if(tSearch) tSearch.addEventListener('input', function(){ tState.q = this.value.trim().toLowerCase(); applyTools(); });
+
+  /* ---------- Vendors: search ---------- */
+  var vRows = Array.prototype.slice.call(document.querySelectorAll('#vendor-table tbody tr'));
+  var vSearch = document.getElementById('vendor-search');
+  if(vSearch) vSearch.addEventListener('input', function(){
+    var q = this.value.trim().toLowerCase();
+    vRows.forEach(function(r){ r.style.display = (!q || r.textContent.toLowerCase().indexOf(q)>=0) ? '' : 'none'; });
+  });
+})();
+</script>
+</body>
+</html>
