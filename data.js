@@ -19,9 +19,11 @@ const DATA = {
   },
 
   summary: {
-    headline: `<b>18 decisions</b> sit in the matrix — <b class="warn">9 still TBD</b>,
-      <b>5 to stop</b>, 2 to continue, 2 closing out. Non-renewals of
-      <b>LinkedIn &amp; Reforge</b> recover roughly <b class="go">$133K</b> a year.
+    // Numbers in {{ }} are filled automatically from the matrix — never edit them by hand.
+    // {{count}} total · {{tbd}}/{{stop}}/{{go}}/{{done}} by status · {{recover}} stop-spend.
+    headline: `<b>{{count}} decisions</b> sit in the matrix — <b class="warn">{{tbd}} still TBD</b>,
+      <b>{{stop}} to stop</b>, {{go}} to continue, {{done}} closing out. Non-renewals of
+      <b>LinkedIn &amp; Reforge</b> recover roughly <b class="go">{{recover}}</b> a year.
       Three partner contracts land on <b class="warn">Jul 31, 2026 — 46 days out</b>. The critical path isn't money:
       <b>every Run-the-Business workstream is currently unassigned</b>, and several admin
       seats sit with people who have left.`,

@@ -1,0 +1,49 @@
+name: Validate data.js
+
+# Safety net for browser edits: checks that data.js is still valid JavaScript
+# on every push and pull request. If you introduce a typo (stray comma, missing
+# quote), this fails with a red X and emails you — BEFORE a broken file can
+# blank out the live site. The deploy workflow runs separately.
+
+on:
+  push:
+    branches: [main]
+    paths: ["data.js"]
+  pull_request:
+    paths: ["data.js"]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check data.js is valid JavaScript
+        run: |
+          echo "Validating data.js syntax..."
+          node --check data.js
+          echo "✓ Syntax OK"
+
+      - name: Check DATA structure is well-formed
+        run: |
+          node -e '
+            const fs = require("fs");
+            const src = fs.readFileSync("data.js", "utf8").replace(/^const DATA =/m, "globalThis.DATA =");
+            eval(src);
+            const required = ["meta","summary","matrix","partners","vendors","tools","workstreams","dashboards","people"];
+            const missing = required.filter(k => !DATA[k]);
+            if (missing.length) { console.error("✗ Missing sections: " + missing.join(", ")); process.exit(1); }
+            const valid = ["stop","tbd","go","done"];
+            const badStatus = DATA.matrix.filter(r => !valid.includes(r.status));
+            if (badStatus.length) {
+              console.error("✗ Invalid status on: " + badStatus.map(r => r.item + " (\"" + r.status + "\")").join(", "));
+              console.error("  Allowed values: stop, tbd, go, done");
+              process.exit(1);
+            }
+            const c = {stop:0,tbd:0,go:0,done:0};
+            DATA.matrix.forEach(r => c[r.status]++);
+            console.log("✓ Structure OK — " + DATA.matrix.length + " matrix items (" +
+              c.stop + " stop, " + c.tbd + " tbd, " + c.go + " continue, " + c.done + " done)");
+          '

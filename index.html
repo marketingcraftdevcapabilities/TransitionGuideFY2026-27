@@ -319,12 +319,67 @@
     .prow{grid-template-columns:1fr;gap:8px}
     .seg3{width:100%} .seg3 button{flex:1}
   }
-  @media (max-width:560px){
-    .wrap{padding:0 18px}
-    .kpi-grid{grid-template-columns:1fr}
-    .hero{padding:24px 22px}
-    .count-note{margin-left:0;width:100%}
+  /* ---------- Phone (≤640px) ---------- */
+  @media (max-width:640px){
+    .wrap{padding:0 16px}
+    .topbar .wrap{padding-top:20px;padding-bottom:24px}
+    h1.title{font-size:34px}
+    .head-main{margin-top:20px}
+    .head-meta{gap:4px 0;flex-direction:column}
+    .hero{padding:22px 18px;border-radius:12px}
+    .hero p{font-size:16px}
+    main{padding:22px 0 56px}
+
+    .kpi-grid{grid-template-columns:1fr 1fr;gap:12px}
+    .kpi{padding:16px 16px 14px}
+    .kpi .num{font-size:34px} .kpi .num.small{font-size:28px}
+
     .mstrip .ms-tiles{grid-template-columns:1fr 1fr}
+    .count-note{margin-left:0;width:100%}
+
+    /* Tabs: bigger tap targets, edge-to-edge scroll with a soft fade hint */
+    .tabs{margin-left:-16px;margin-right:-16px;padding:0 16px;gap:2px;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{padding:13px 12px;font-size:14px}
+
+    .pcard{padding:18px 16px}
+    .sec-head{margin:34px 2px 14px}
+    .sec-head h2{font-size:19px}
+
+    /* Tables scroll horizontally; cue the user it's swipeable */
+    .table-scroll, .tl-scroll{
+      margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;
+      -webkit-overflow-scrolling:touch;
+    }
+    table.dt{font-size:13px;min-width:560px}
+    table.dt thead th, table.dt tbody td{padding:11px 10px}
+
+    /* Controls (filters + search) stack cleanly */
+    .controls{gap:8px}
+    .search{max-width:none;flex-basis:100%;order:5}
+    .fgroup{gap:6px}
+    .chipbtn{padding:8px 12px}              /* ≥36px touch height */
+
+    /* Entity cards full-bleed-ish */
+    .ecard .body{padding:18px 16px}
+    .facts{gap:8px 16px}
+
+    .donut svg{width:168px;height:168px} .donut{flex:0 0 168px}
+  }
+  /* ---------- Small phone (≤400px) ---------- */
+  @media (max-width:400px){
+    .kpi-grid{grid-template-columns:1fr}
+    .mstrip .ms-tiles{grid-template-columns:1fr 1fr}
+    h1.title{font-size:30px}
+    .pill{font-size:10px;padding:5px 9px}
+  }
+  /* Swipe hint under any horizontally-scrollable table on touch devices */
+  @media (hover:none) and (max-width:640px){
+    .table-scroll::after{
+      content:"› swipe table";display:block;text-align:right;
+      font-size:11px;color:var(--muted);padding:6px 2px 0;font-style:italic;
+    }
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
   @media print{

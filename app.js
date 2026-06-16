@@ -46,7 +46,19 @@
       '<span>Prepared <b>'+esc(m.preparedDate)+'</b> · Updated <b>'+esc(m.updatedDate)+'</b></span>';
     document.title = m.title + ' · ' + m.team;
 
-    el('hero-text').innerHTML = DATA.summary.headline;
+    // Fill the {{tokens}} in the headline from the live matrix so the
+    // 1-minute read can never drift from the KPI cards.
+    var hc = { stop:0, tbd:0, go:0, done:0 };
+    DATA.matrix.forEach(function(r){ hc[r.status]++; });
+    var hRecover = DATA.matrix.filter(function(r){ return r.status==='stop' && r.budget; })
+                              .reduce(function(a,r){ return a + r.budget; }, 0);
+    el('hero-text').innerHTML = DATA.summary.headline
+      .replace('{{count}}',   DATA.matrix.length)
+      .replace('{{tbd}}',     hc.tbd)
+      .replace('{{stop}}',    hc.stop)
+      .replace('{{go}}',      hc.go)
+      .replace('{{done}}',    hc.done)
+      .replace('{{recover}}', money(hRecover));
 
     var rs = el('resource-strip');
     DATA.summary.resources.forEach(function(r){
