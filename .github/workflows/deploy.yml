@@ -1,0 +1,49 @@
+name: Deploy Transition Guide to GitHub Pages
+
+# Publishes the site on every push to main, and stamps today's date
+# into the "Updated" line automatically — you never edit the date by hand.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one deploy at a time; newer pushes cancel in-flight runs.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Stamp today's date into the "Updated" line
+        run: |
+          TODAY=$(TZ="America/Los_Angeles" date "+%b %-d, %Y")
+          echo "Stamping updatedDate: $TODAY"
+          # Replace the updatedDate value in data.js with today's date.
+          sed -i -E "s/(updatedDate:[[:space:]]*)\"[^\"]*\"/\1\"${TODAY}\"/" data.js
+          grep -n "updatedDate" data.js || true
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
