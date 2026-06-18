@@ -130,14 +130,31 @@
     var streams = DATA.workstreams.length;
     function pct(c){ return (c/n*100).toFixed(1); }
 
+    // Interactive disposition bar: each segment shows its COUNT and filters the
+    // matrix when clicked. A numeric chip-row sits below so thin segments are
+    // still readable on every screen size.
+    var SEG = [
+      { k:'stop', label:'Stop',     col:'var(--stop)' },
+      { k:'tbd',  label:'TBD',      col:'var(--tbd)'  },
+      { k:'go',   label:'Continue', col:'var(--go)'   },
+      { k:'done', label:'Completed',col:'var(--done)' },
+    ];
+    var ministack = SEG.map(function(s){
+      if(cnt[s.k] === 0) return '';
+      return '<button class="mseg" data-status="'+s.k+'" style="width:'+pct(cnt[s.k])+'%;background:'+s.col+'" '+
+        'title="'+cnt[s.k]+' '+s.label+' — tap to view" aria-label="'+cnt[s.k]+' '+s.label+'">'+
+        '<span class="mseg-n">'+cnt[s.k]+'</span></button>';
+    }).join('');
+    var miniKeys = SEG.map(function(s){
+      return '<button class="mkey" data-status="'+s.k+'" title="View '+s.label+' items">'+
+        '<span class="mkey-sw" style="background:'+s.col+'"></span>'+
+        '<span class="mkey-n">'+cnt[s.k]+'</span><span class="mkey-l">'+s.label+'</span></button>';
+    }).join('');
     el('kpi-grid').innerHTML =
       '<div class="kpi"><div class="label">Decision items</div><div class="num">'+n+'</div>'+
         '<div class="sub">Partners, vendors &amp; tools under review</div>'+
-        '<div class="ministack" title="'+cnt.stop+' Stop · '+cnt.tbd+' TBD · '+cnt.go+' Continue · '+cnt.done+' Completed">'+
-          '<i style="width:'+pct(cnt.stop)+'%;background:var(--stop)"></i>'+
-          '<i style="width:'+pct(cnt.tbd)+'%;background:var(--tbd)"></i>'+
-          '<i style="width:'+pct(cnt.go)+'%;background:var(--go)"></i>'+
-          '<i style="width:'+pct(cnt.done)+'%;background:var(--done)"></i></div></div>'+
+        '<div class="ministack" role="group" aria-label="Decision items by status">'+ministack+'</div>'+
+        '<div class="mkeys">'+miniKeys+'</div></div>'+
       '<div class="kpi"><div class="label">Decisions pending</div><div class="num">'+cnt.tbd+'</div>'+
         '<div class="sub">Items marked TBD after transition</div><div class="chip">'+(cnt.tbd>=n/2?'half of the matrix':'open decisions')+'</div></div>'+
       '<div class="kpi"><div class="label">Annual spend to wind down</div><div class="num small">'+money(stopRecover)+'</div>'+
@@ -602,6 +619,11 @@
     });
     if(mSearch) mSearch.addEventListener('input', function(){ mState.q = this.value.trim().toLowerCase(); applyMatrix(); });
     if(mReset) mReset.addEventListener('click', function(){ mState = { status:'all', cat:'all', q:'', due:null }; if(mSearch) mSearch.value=''; applyMatrix(); });
+
+    // KPI disposition bar (segments + numeric keys) → jump to the matrix, filtered.
+    document.querySelectorAll('.ministack .mseg, .mkeys .mkey').forEach(function(e){
+      e.addEventListener('click', function(){ focusMatrix(e.getAttribute('data-status'), 'all'); });
+    });
 
     // Decisions-tab donut/legend → jump to the matrix and filter it.
     document.querySelectorAll('#donut .seg, #dlegend .row').forEach(function(e){
