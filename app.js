@@ -95,12 +95,15 @@
     }
     el('hero-text').innerHTML = fillTokens(DATA.summary.headline);
 
-    var rs = el('resource-strip');
-    DATA.summary.resources.forEach(function(r){
-      var a = document.createElement('a');
-      a.className='lnk'; a.target='_blank'; a.rel='noopener'; a.href=r.url; a.textContent=r.label;
-      rs.appendChild(a);
-    });
+    // Prominent vertical key-resources card.
+    var rs = el('resource-list');
+    if(rs){
+      rs.innerHTML = DATA.summary.resources.map(function(r){
+        return '<a class="reso-link" target="_blank" rel="noopener" href="'+esc(r.url)+'">'+
+          '<span class="ri">↗</span><span class="rt">'+esc(r.label)+'</span>'+
+          '<span class="rarrow">›</span></a>';
+      }).join('');
+    }
 
     el('strat-strip').innerHTML = DATA.summary.strategicDirections.map(function(s){
       return '<div class="sc"><div class="t">'+esc(s.title)+'</div><div class="d">'+esc(s.desc)+'</div></div>';

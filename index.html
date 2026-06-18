@@ -45,11 +45,29 @@
   .head-meta b{color:#fff;font-weight:600}
 
   main{padding:32px 0 70px}
+  /* Top row: 1-minute read beside the prominent key-resources card */
+  .top-row{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:stretch}
   .hero{background:var(--blueberry);color:#fff;border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
   .hero .eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;text-transform:uppercase;color:var(--agave-30)}
   .hero p{font-size:clamp(17px,2.1vw,22px);line-height:1.5;margin:16px 0 0;font-weight:400;color:#E8EEF6}
   .hero b{color:var(--agave-30);font-weight:700}
   .hero b.go{color:#8BF0A6} .hero b.warn{color:#FFD66B}
+
+  /* Prominent key-resources card (vertical, tappable rows) */
+  .reso-card{background:var(--card);border:1px solid var(--line-soft);border-radius:var(--radius);
+    box-shadow:var(--shadow-sm);padding:18px 18px 14px;display:flex;flex-direction:column}
+  .reso-head{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--super-blue);margin-bottom:12px}
+  .reso-list{display:flex;flex-direction:column;gap:8px}
+  .reso-link{display:flex;align-items:center;gap:11px;padding:11px 13px;border:1px solid var(--line);
+    border-radius:10px;background:#FBFDFF;color:var(--ink);font-size:14px;font-weight:600;
+    text-decoration:none;transition:background .12s,border-color .12s,transform .1s}
+  .reso-link:hover{background:#E4EEFF;border-color:#B5D4F4;color:var(--super-blue);text-decoration:none}
+  .reso-link:active{transform:scale(.99)}
+  .reso-link .ri{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--wintermint);
+    display:flex;align-items:center;justify-content:center;color:var(--super-blue);font-size:14px}
+  .reso-link .rt{flex:1;min-width:0;line-height:1.25}
+  .reso-link .rarrow{flex:0 0 auto;color:var(--muted);font-size:12px}
+  .reso-link:hover .rarrow{color:var(--super-blue)}
 
   .strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;align-items:center}
   .strip .slabel{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:4px}
@@ -354,6 +372,9 @@
   .btn-csv:hover{background:#1A52C7;border-color:#1A52C7}
 
   @media (max-width:920px){
+    .top-row{grid-template-columns:1fr}
+    .reso-list{flex-flow:row wrap}
+    .reso-link{flex:1 1 calc(50% - 4px)}
     .kpi-grid{grid-template-columns:1fr 1fr}
     .insights,.grid2,.strat{grid-template-columns:1fr}
     .cardgrid,.people{grid-template-columns:1fr}
@@ -460,15 +481,18 @@
 
 <main class="wrap">
 
-  <section class="hero">
-    <div class="eyebrow">The 1-minute read</div>
-    <p id="hero-text"></p>
-  </section>
+  <div class="top-row">
+    <section class="hero">
+      <div class="eyebrow">The 1-minute read</div>
+      <p id="hero-text"></p>
+    </section>
+    <aside class="reso-card" aria-label="Key resources">
+      <div class="reso-head">Key resources</div>
+      <div class="reso-list" id="resource-list"></div>
+    </aside>
+  </div>
 
-  <div class="strip" id="resource-strip"><span class="slabel">Key resources</span></div>
-
-  <div class="strat" id="strat-strip"></div>
-  <div class="openaction" id="open-action"></div>
+  <div class="kpi-grid" id="kpi-grid"></div>
 
   <div class="legend-strip" aria-label="Status legend">
     <span class="li"><span class="sw stop"></span><b>Stop</b>&nbsp;— do not renew, wind down</span>
@@ -476,12 +500,6 @@
     <span class="li"><span class="sw go"></span><b>Continue</b>&nbsp;— transition access only</span>
     <span class="li"><span class="sw done"></span><b>Completed</b>&nbsp;— delivered, close POs</span>
   </div>
-
-  <div class="kpi-grid" id="kpi-grid"></div>
-
-  <div class="sec-head"><h2><span class="marker">§01</span>What leadership needs to know</h2><span class="desc">Key takeaways from the full portfolio.</span></div>
-  <div class="sec-rule" style="margin-bottom:18px"></div>
-  <div class="insights" id="insights"></div>
 
   <div class="navbar" id="navbar">
     <div class="tabs" role="tablist" aria-label="Transition sections">
@@ -526,6 +544,19 @@
         <div class="exec-actions" id="exec-actions"></div>
         <div class="exec-empty" id="exec-empty" hidden>No items match — <a href="#" id="exec-empty-clear">show all</a>.</div>
         <div class="sowhat" id="exec-sowhat"></div>
+      </div>
+
+      <div class="pcard">
+        <h3>Why this matters</h3>
+        <p class="ptag">The takeaways behind the numbers.</p>
+        <div class="insights" id="insights"></div>
+      </div>
+
+      <div class="pcard">
+        <h3>How the work is organized</h3>
+        <p class="ptag">The strategic frame this portfolio sits in.</p>
+        <div class="strat" id="strat-strip"></div>
+        <div class="openaction" id="open-action"></div>
       </div>
     </section>
 
