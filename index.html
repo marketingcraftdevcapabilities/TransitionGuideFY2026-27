@@ -233,9 +233,28 @@
   .tl-stop.now .tl-date{color:var(--super-blue)} .tl-stop.cliff .tl-date{color:var(--stop-text)}
   .tl-stop.cliff .tl-days{background:var(--stop-bg);color:var(--stop-text)}
   .tl-stop.soon .tl-days{background:var(--tbd-bg);color:var(--tbd-text)}
-  .tl-stop.tl-click{cursor:pointer;border-radius:10px;transition:transform .12s, background .12s}
-  .tl-stop.tl-click:hover{transform:translateY(-2px);background:rgba(35,108,255,.05)}
+  .tl-stop.tl-click{cursor:pointer;border-radius:12px;transition:transform .12s, background .12s, box-shadow .12s}
+  .tl-stop.tl-click:hover{transform:translateY(-2px);background:#F1F6FF;box-shadow:0 4px 14px rgba(35,108,255,.10)}
   .tl-stop.tl-click:focus-visible{outline:2px solid var(--super-blue);outline-offset:2px}
+  .tl-stop.tl-active{background:#E4EEFF;box-shadow:inset 0 0 0 1.5px #B5D4F4}
+
+  /* roadmap given room to breathe (Overview): taller, wider, padded stops */
+  .roadmap-card .tl-scroll{padding:8px 0 4px}
+  .timeline-lg{min-width:880px;padding:10px 0 4px}
+  .timeline-lg .tl-line{top:118px}
+  .timeline-lg .tl-stop{padding:8px 8px 10px}
+  .timeline-lg .tl-items{min-height:104px;gap:6px;margin-bottom:14px}
+  .timeline-lg .tl-chip{font-size:11.5px;padding:4px 9px}
+  .timeline-lg .tl-dot{width:17px;height:17px}
+  .timeline-lg .tl-date{font-size:13.5px;margin-top:13px}
+  .timeline-lg .tl-meta{font-size:12px}
+  .roadmap-hint{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;
+    letter-spacing:.04em;text-transform:uppercase;color:var(--super-blue);background:#E4EEFF;
+    border:1px solid #B5D4F4;border-radius:999px;padding:6px 12px;white-space:nowrap}
+  .roadmap-hint .ti::before{content:"\2192"}
+
+  /* Overview body grid: donut (compact) beside the action list (wide) */
+  .grid-overview{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:20px;align-items:start;margin-bottom:20px}
 
   /* tables */
   table.dt{width:100%;border-collapse:collapse;font-size:13.5px}
@@ -376,7 +395,7 @@
     .reso-list{flex-flow:row wrap}
     .reso-link{flex:1 1 calc(50% - 4px)}
     .kpi-grid{grid-template-columns:1fr 1fr}
-    .insights,.grid2,.strat{grid-template-columns:1fr}
+    .insights,.grid2,.grid-overview,.strat{grid-template-columns:1fr}
     .cardgrid,.people{grid-template-columns:1fr}
     .donut{flex-basis:100%}
   }
@@ -517,46 +536,57 @@
 
     <!-- ===== OVERVIEW (executive view — loads first) ===== -->
     <section class="panel active" id="summary" role="tabpanel">
-      <div class="grid2 tight">
-        <div class="pcard">
-          <h3>Where things stand</h3>
-          <p class="ptag">All decision items, by recommendation. Tap a slice to filter the list below.</p>
-          <div class="donut-wrap">
-            <div class="donut" id="donut-x"></div>
-            <div class="dlegend" id="dlegend-x"></div>
-          </div>
-        </div>
-        <div class="pcard">
-          <h3>What's due when</h3>
-          <p class="ptag">The dates that drive the handoff. Tap a date to filter the list below.</p>
-          <div class="tl-scroll"><div class="timeline"><div class="tl-line"></div><div class="tl-track" id="tl-track-x"></div></div></div>
-        </div>
-      </div>
 
-      <div class="pcard exec">
-        <div class="exec-head">
-          <div>
-            <h3 id="exec-title">What needs a decision now</h3>
-            <p class="ptag" id="exec-tag">The moves that matter most before the deadlines. Everything else is detail.</p>
-          </div>
-          <button class="btn-reset" id="exec-reset" type="button" hidden>Show all</button>
-        </div>
-        <div class="exec-actions" id="exec-actions"></div>
-        <div class="exec-empty" id="exec-empty" hidden>No items match — <a href="#" id="exec-empty-clear">show all</a>.</div>
-        <div class="sowhat" id="exec-sowhat"></div>
-      </div>
-
-      <div class="pcard">
-        <h3>Why this matters</h3>
-        <p class="ptag">The takeaways behind the numbers.</p>
-        <div class="insights" id="insights"></div>
-      </div>
-
+      <!-- 1. Orientation: how the work is organized (full width, compact) -->
       <div class="pcard">
         <h3>How the work is organized</h3>
         <p class="ptag">The strategic frame this portfolio sits in.</p>
         <div class="strat" id="strat-strip"></div>
         <div class="openaction" id="open-action"></div>
+      </div>
+
+      <!-- 2. The roadmap — the star: full width, room to breathe, clearly interactive -->
+      <div class="pcard roadmap-card">
+        <div class="exec-head">
+          <div>
+            <h3>What's due when</h3>
+            <p class="ptag">The dates that drive the handoff — Jul 31 is the pressure point. Tap a date to filter the list below.</p>
+          </div>
+          <span class="roadmap-hint"><i class="ti"></i>Tap a milestone</span>
+        </div>
+        <div class="tl-scroll"><div class="timeline timeline-lg"><div class="tl-line"></div><div class="tl-track" id="tl-track-x"></div></div></div>
+      </div>
+
+      <!-- 3. Where things stand (donut) + what needs a decision, side by side -->
+      <div class="grid-overview">
+        <div class="pcard">
+          <h3>Where things stand</h3>
+          <p class="ptag">All decision items, by recommendation. Tap a slice to filter the list.</p>
+          <div class="donut-wrap">
+            <div class="donut" id="donut-x"></div>
+            <div class="dlegend" id="dlegend-x"></div>
+          </div>
+        </div>
+
+        <div class="pcard exec">
+          <div class="exec-head">
+            <div>
+              <h3 id="exec-title">What needs a decision now</h3>
+              <p class="ptag" id="exec-tag">The moves that matter most before the deadlines.</p>
+            </div>
+            <button class="btn-reset" id="exec-reset" type="button" hidden>Show all</button>
+          </div>
+          <div class="exec-actions" id="exec-actions"></div>
+          <div class="exec-empty" id="exec-empty" hidden>No items match — <a href="#" id="exec-empty-clear">show all</a>.</div>
+          <div class="sowhat" id="exec-sowhat"></div>
+        </div>
+      </div>
+
+      <!-- 4. Why this matters (the insights) -->
+      <div class="pcard">
+        <h3>Why this matters</h3>
+        <p class="ptag">The takeaways behind the numbers.</p>
+        <div class="insights" id="insights"></div>
       </div>
     </section>
 

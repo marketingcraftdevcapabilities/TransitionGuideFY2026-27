@@ -809,6 +809,13 @@
     document.querySelectorAll('#donut-x .seg').forEach(function(seg){
       seg.classList.toggle('on', !!(f && f.status && seg.getAttribute('data-status')===f.status));
     });
+    // Highlight the active roadmap milestone when filtering by due date.
+    document.querySelectorAll('#summary .tl-stop').forEach(function(stop){
+      var lbl = (stop.querySelector('.tl-date')||{}).textContent || '';
+      lbl = lbl.split('·')[0].trim();
+      var due = Object.keys(DUELABEL).filter(function(k){ return DUELABEL[k] === lbl; })[0];
+      stop.classList.toggle('tl-active', !!(f && f.due && due === f.due));
+    });
   }
   function daysFromTodayPhrase(key){
     var d = daysFromToday(key);
