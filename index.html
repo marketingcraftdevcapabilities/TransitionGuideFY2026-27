@@ -124,6 +124,11 @@
 
   /* Executive "what to do" action list (Overview tab) */
   .pcard.exec{border-top:4px solid var(--super-blue)}
+  .exec-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+  .exec-head .ptag{margin-bottom:0}
+  .exec-head .btn-reset{flex:0 0 auto;margin-top:2px}
+  .exec-empty{font-size:13.5px;color:var(--muted);padding:18px 2px 4px}
+  .exec-empty a{font-weight:600}
   .exec-actions{display:flex;flex-direction:column;gap:12px;margin-top:6px}
   .exec-act{display:flex;gap:16px;align-items:flex-start;padding:16px 18px;border:1px solid var(--line-soft);border-radius:12px;background:#FCFDFF}
   .exec-act .ea-icon{flex:0 0 auto;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800}
@@ -158,6 +163,8 @@
   .dlegend{flex:1;min-width:190px;display:flex;flex-direction:column;gap:9px}
   .dlegend .row{display:flex;align-items:center;gap:11px;font-size:14px;cursor:pointer;padding:4px 6px;border-radius:8px}
   .dlegend .row:hover{background:var(--wintermint)}
+  .dlegend .row.on{background:#E4EEFF;box-shadow:inset 0 0 0 1px #B5D4F4}
+  .donut svg circle.seg.on{opacity:1;stroke-width:32}
   .dlegend .row .nm{flex:1;color:var(--text)}
   .dlegend .row .ct{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
   .dlegend .row .pc{color:var(--muted);font-size:12.5px;width:42px;text-align:right}
@@ -492,17 +499,10 @@
 
     <!-- ===== OVERVIEW (executive view — loads first) ===== -->
     <section class="panel active" id="summary" role="tabpanel">
-      <div class="pcard exec">
-        <h3>What needs a decision now</h3>
-        <p class="ptag">The handful of moves that matter most before the Jul 31 deadline. Everything else is detail.</p>
-        <div class="exec-actions" id="exec-actions"></div>
-        <div class="sowhat" id="exec-sowhat"></div>
-      </div>
-
       <div class="grid2 tight">
         <div class="pcard">
           <h3>Where things stand</h3>
-          <p class="ptag">All decision items, by recommendation. Tap a slice to see those items.</p>
+          <p class="ptag">All decision items, by recommendation. Tap a slice to filter the list below.</p>
           <div class="donut-wrap">
             <div class="donut" id="donut-x"></div>
             <div class="dlegend" id="dlegend-x"></div>
@@ -510,9 +510,22 @@
         </div>
         <div class="pcard">
           <h3>What's due when</h3>
-          <p class="ptag">The dates that drive the handoff. Jul 31 is the pressure point.</p>
+          <p class="ptag">The dates that drive the handoff. Tap a date to filter the list below.</p>
           <div class="tl-scroll"><div class="timeline"><div class="tl-line"></div><div class="tl-track" id="tl-track-x"></div></div></div>
         </div>
+      </div>
+
+      <div class="pcard exec">
+        <div class="exec-head">
+          <div>
+            <h3 id="exec-title">What needs a decision now</h3>
+            <p class="ptag" id="exec-tag">The moves that matter most before the deadlines. Everything else is detail.</p>
+          </div>
+          <button class="btn-reset" id="exec-reset" type="button" hidden>Show all</button>
+        </div>
+        <div class="exec-actions" id="exec-actions"></div>
+        <div class="exec-empty" id="exec-empty" hidden>No items match — <a href="#" id="exec-empty-clear">show all</a>.</div>
+        <div class="sowhat" id="exec-sowhat"></div>
       </div>
     </section>
 

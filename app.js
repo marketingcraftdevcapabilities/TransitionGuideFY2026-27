@@ -600,23 +600,44 @@
     if(mSearch) mSearch.addEventListener('input', function(){ mState.q = this.value.trim().toLowerCase(); applyMatrix(); });
     if(mReset) mReset.addEventListener('click', function(){ mState = { status:'all', cat:'all', q:'', due:null }; if(mSearch) mSearch.value=''; applyMatrix(); });
 
-    document.querySelectorAll('.donut .seg, .dlegend .row').forEach(function(e){
+    // Decisions-tab donut/legend → jump to the matrix and filter it.
+    document.querySelectorAll('#donut .seg, #dlegend .row').forEach(function(e){
       e.addEventListener('click', function(){ focusMatrix(e.getAttribute('data-status'), 'all'); });
     });
     document.querySelectorAll('#xtab .xcell').forEach(function(cell){
       if(cell.disabled) return;
       cell.addEventListener('click', function(){ focusMatrix(cell.getAttribute('data-status'), cell.getAttribute('data-cat')); });
     });
+
+    // Overview donut/legend → filter the action list IN PLACE (stay on Overview).
+    document.querySelectorAll('#donut-x .seg, #dlegend-x .row').forEach(function(e){
+      e.style.cursor = 'pointer';
+      e.addEventListener('click', function(){
+        var s = e.getAttribute('data-status');
+        // Clicking the active slice again clears the filter.
+        setExecFilter(execFilter && execFilter.status === s ? null : { status: s });
+      });
+    });
+    var execReset = el('exec-reset');
+    if(execReset) execReset.addEventListener('click', function(){ setExecFilter(null); });
+    var execClear = el('exec-empty-clear');
+    if(execClear) execClear.addEventListener('click', function(ev){ ev.preventDefault(); setExecFilter(null); });
+
+    // Timeline markers: Decisions-tab → jump+filter matrix; Overview → filter in place.
     document.querySelectorAll('.tl-stop').forEach(function(stop){
       var d = stop.querySelector('.tl-date'); if(!d) return;
       var label = d.textContent.split('·')[0].trim();
       var due = Object.keys(DUELABEL).filter(function(k){ return DUELABEL[k] === label; })[0];
       if(!due) return;
       if(!mRows.some(function(r){ return r.children[4].getAttribute('data-sort') === due; })) return;
+      var inOverview = !!stop.closest('#summary');
       stop.classList.add('tl-click'); stop.setAttribute('tabindex','0'); stop.setAttribute('role','button');
-      stop.setAttribute('title','Filter the matrix to contracts due ' + label);
-      stop.addEventListener('click', function(){ focusMatrixDue(due); });
-      stop.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); focusMatrixDue(due); } });
+      stop.setAttribute('title', (inOverview ? 'Filter the list to contracts due ' : 'Filter the matrix to contracts due ') + label);
+      var act = inOverview
+        ? function(){ setExecFilter(execFilter && execFilter.due === due ? null : { due: due }); }
+        : function(){ focusMatrixDue(due); };
+      stop.addEventListener('click', act);
+      stop.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); act(); } });
     });
 
     applyMatrix();
@@ -713,41 +734,78 @@
   }
 
   /* ---------- Executive action list (Overview tab) ---------- */
+  // execFilter: null (default curated view) or { status } or { due }.
+  var execFilter = null;
+  var ICON = { stop:'✕', go:'✓', tbd:'?', done:'✓' };
+  var VERB = { stop:'Wind down', tbd:'Decide on', go:'Continue', done:'Close out' };
+
+  function execActionCard(r){
+    var amt = r.budget ? ' <span class="ea-amt">'+(r.status==='stop'?'→ recover ':'')+money(r.budget)+'</span>' : '';
+    var due = r.due ? ('Due ' + DUEFMT(r.due) + ' · ' + daysFromTodayPhrase(r.due)) : 'No fixed deadline';
+    var desc = String(r.action).replace(/<[^>]+>/g, ''); // strip inline links for a clean sentence
+    return '<div class="exec-act '+r.status+'">'+
+      '<div class="ea-icon">'+ICON[r.status]+'</div>'+
+      '<div class="ea-body">'+
+        '<div class="ea-title">'+VERB[r.status]+' '+esc(r.item)+amt+'</div>'+
+        '<div class="ea-desc">'+esc(desc)+'</div>'+
+        '<div class="ea-meta">'+esc(due)+'</div>'+
+      '</div></div>';
+  }
+
   function renderExec(){
     var host = el('exec-actions'); if(!host) return;
-    // Surface the decisions that matter most: every Stop (money back) and every
-    // partner TBD (a real decision the CMO owns), ordered by urgency then dollars.
-    var picks = DATA.matrix.filter(function(r){
-      return r.status === 'stop' || (r.status === 'tbd' && r.cat === 'partner');
-    });
+    var rows, title, tag;
+
+    if(execFilter && execFilter.status){
+      rows = DATA.matrix.filter(function(r){ return r.status === execFilter.status; });
+      title = SLABEL[execFilter.status] + ' — ' + plural(rows.length, 'item');
+      tag = 'Showing every item recommended to ' + SLABEL[execFilter.status].toLowerCase() + '.';
+    } else if(execFilter && execFilter.due){
+      rows = DATA.matrix.filter(function(r){ return r.due === execFilter.due; });
+      title = 'Due ' + (DUELABEL[execFilter.due] || execFilter.due) + ' — ' + plural(rows.length, 'item');
+      tag = 'Everything with this contract date.';
+    } else {
+      // Default curated view: the moves that matter — every Stop + every partner TBD.
+      rows = DATA.matrix.filter(function(r){
+        return r.status === 'stop' || (r.status === 'tbd' && r.cat === 'partner');
+      });
+      title = 'What needs a decision now';
+      tag = 'The moves that matter most before the deadlines. Everything else is detail.';
+    }
     // Sort: soonest due first (no-date last), then largest dollars.
-    picks.sort(function(a,b){
+    rows.sort(function(a,b){
       var ad = a.due || '99999999', bd = b.due || '99999999';
       if(ad !== bd) return ad < bd ? -1 : 1;
       return (b.budget||0) - (a.budget||0);
     });
-    var ICON = { stop:'✕', go:'✓', tbd:'?' };
-    var VERB = { stop:'Wind down', tbd:'Decide on', go:'Continue' };
-    host.innerHTML = picks.map(function(r){
-      var amt = r.budget ? ' <span class="ea-amt">'+(r.status==='stop'?'→ recover ':'')+money(r.budget)+'</span>' : '';
-      var due = r.due ? ('Due ' + DUEFMT(r.due) + ' · ' + daysFromTodayPhrase(r.due)) : 'No fixed deadline';
-      // Strip any inline links from the action for a clean exec sentence.
-      var desc = String(r.action).replace(/<[^>]+>/g, '');
-      return '<div class="exec-act '+r.status+'">'+
-        '<div class="ea-icon">'+ICON[r.status]+'</div>'+
-        '<div class="ea-body">'+
-          '<div class="ea-title">'+VERB[r.status]+' '+esc(r.item)+amt+'</div>'+
-          '<div class="ea-desc">'+esc(desc)+'</div>'+
-          '<div class="ea-meta">'+esc(due)+'</div>'+
-        '</div></div>';
-    }).join('');
 
-    var stopSum = picks.filter(function(r){ return r.status==='stop' && r.budget; })
-                       .reduce(function(a,r){ return a+r.budget; }, 0);
-    var tbdN = picks.filter(function(r){ return r.status==='tbd'; }).length;
+    setTxt('exec-title', title);
+    setTxt('exec-tag', tag);
+    host.innerHTML = rows.map(execActionCard).join('');
+    var empty = el('exec-empty'); if(empty) empty.hidden = rows.length > 0;
+    var reset = el('exec-reset'); if(reset) reset.hidden = !execFilter;
+
+    // Bottom-line summary always reflects the full portfolio, not the filter.
+    var all = DATA.matrix;
+    var stopSum = all.filter(function(r){ return r.status==='stop' && r.budget; })
+                     .reduce(function(a,r){ return a+r.budget; }, 0);
+    var tbdN = all.filter(function(r){ return r.status==='tbd' && r.cat==='partner'; }).length;
     el('exec-sowhat').innerHTML = '<b>Bottom line:</b> stopping the non-renewals recovers about <b>'+
       money(stopSum)+'</b> a year, and <b>'+tbdN+'</b> partner '+(tbdN===1?'decision':'decisions')+
-      ' need a yes/no before the deadlines above. Naming owners for each is the first move.';
+      ' need a yes/no before the deadlines. Naming owners for each is the first move.';
+  }
+
+  // Apply / clear the in-place Overview filter (called by donut + timeline clicks).
+  function setExecFilter(f){
+    execFilter = f;
+    renderExec();
+    // Reflect the active slice/marker visually on the Overview widgets.
+    document.querySelectorAll('#dlegend-x .row').forEach(function(row){
+      row.classList.toggle('on', !!(f && f.status && row.getAttribute('data-status')===f.status));
+    });
+    document.querySelectorAll('#donut-x .seg').forEach(function(seg){
+      seg.classList.toggle('on', !!(f && f.status && seg.getAttribute('data-status')===f.status));
+    });
   }
   function daysFromTodayPhrase(key){
     var d = daysFromToday(key);
