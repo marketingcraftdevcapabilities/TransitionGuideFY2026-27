@@ -91,17 +91,55 @@
   .callout.go{background:var(--go-bg);border-color:var(--go)} .callout.go b{color:var(--go-text)}
   .callout.done{background:var(--done-bg);border-color:var(--done)} .callout.done b{color:var(--done-text)}
 
-  .tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin:44px 2px 0;overflow-x:auto}
-  .tab{appearance:none;background:none;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:600;color:var(--muted);padding:12px 14px;border-bottom:2.5px solid transparent;white-space:nowrap;transition:color .15s}
-  .tab:hover{color:var(--ink)}
-  .tab.active{color:var(--super-blue);border-color:var(--super-blue)}
-  .tab:focus-visible{outline:2px solid var(--super-blue);outline-offset:2px;border-radius:6px}
+  /* Sticky, vivid pill navigation — pinned to the top as you scroll.
+     Full-bleed bar (breaks out of the centered wrap) with centered pills. */
+  .navbar{position:sticky;top:0;z-index:50;margin:40px 0 0;
+    background:rgba(255,255,255,.94);
+    -webkit-backdrop-filter:saturate(160%) blur(10px);backdrop-filter:saturate(160%) blur(10px);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    box-shadow:0 2px 14px rgba(0,37,74,.05)}
+  .navbar.stuck{box-shadow:0 6px 20px rgba(0,37,74,.12)}
+  /* .tabs reuses .wrap (max-width + centered) for alignment with content */
+  .tabs{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;padding:11px 0;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{appearance:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;
+    color:var(--ink);background:var(--wintermint);border:1px solid var(--line);
+    padding:10px 16px;border-radius:999px;white-space:nowrap;
+    transition:background .15s,color .15s,border-color .15s,transform .1s;display:inline-flex;align-items:center;gap:7px}
+  .tab .tnum{font-size:11px;font-weight:700;background:#fff;color:var(--muted);
+    border:1px solid var(--line);border-radius:999px;padding:1px 7px;min-width:20px;text-align:center}
+  .tab:hover{background:#E4EEFF;border-color:#B5D4F4;color:var(--super-blue)}
+  .tab:hover .tnum{color:var(--super-blue)}
+  .tab.active{background:var(--super-blue);color:#fff;border-color:var(--super-blue);box-shadow:0 2px 8px rgba(35,108,255,.30)}
+  .tab.active .tnum{background:rgba(255,255,255,.25);color:#fff;border-color:transparent}
+  .tab:active{transform:scale(.97)}
+  .tab:focus-visible{outline:2px solid var(--blueberry);outline-offset:2px}
   .panel{display:none;animation:fade .25s ease}
   .panel.active{display:block}
   @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
   .panels{margin-top:24px}
   .pcard{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--line-soft);padding:24px 26px;margin-bottom:20px}
+
+  /* Executive "what to do" action list (Overview tab) */
+  .pcard.exec{border-top:4px solid var(--super-blue)}
+  .exec-actions{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+  .exec-act{display:flex;gap:16px;align-items:flex-start;padding:16px 18px;border:1px solid var(--line-soft);border-radius:12px;background:#FCFDFF}
+  .exec-act .ea-icon{flex:0 0 auto;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800}
+  .exec-act.stop .ea-icon{background:var(--stop-bg);color:var(--stop-text)}
+  .exec-act.go .ea-icon{background:var(--go-bg);color:var(--go-text)}
+  .exec-act.tbd .ea-icon{background:var(--tbd-bg);color:var(--tbd-text)}
+  .exec-act .ea-body{flex:1;min-width:0}
+  .exec-act .ea-title{font-size:15.5px;font-weight:700;color:var(--ink)}
+  .exec-act .ea-title .ea-amt{font-weight:700}
+  .exec-act.stop .ea-amt{color:var(--go-text)}
+  .exec-act .ea-desc{font-size:13.5px;color:var(--text);margin-top:3px;line-height:1.5}
+  .exec-act .ea-meta{font-size:11.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);margin-top:7px}
+  /* "Detailed data" banner atop the heavier tabs */
+  .detail-banner{font-size:13px;color:var(--muted);background:var(--wintermint);border:1px solid var(--line-soft);border-radius:10px;padding:11px 16px;margin-bottom:18px}
+  .detail-banner i{font-style:normal;font-weight:700;color:var(--super-blue);text-transform:uppercase;font-size:11px;letter-spacing:.06em;margin-right:4px}
+  .detail-banner b{color:var(--ink)}
   .pcard h3{font-size:17px;font-weight:700;color:var(--ink);margin:0 0 2px}
   .pcard .ptag{font-size:13px;color:var(--muted);margin:0 0 18px}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -438,18 +476,49 @@
   <div class="sec-rule" style="margin-bottom:18px"></div>
   <div class="insights" id="insights"></div>
 
-  <div class="tabs" role="tablist" aria-label="Transition sections">
-    <button class="tab active" role="tab" aria-selected="true"  data-tab="matrix">Decision Matrix</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="partners">Strategic Partners</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="vendors">Vendors</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="tools">Tools &amp; Tech</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="streams">Workstreams</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="dash">Dashboards &amp; Access</button>
+  <div class="navbar" id="navbar">
+    <div class="tabs" role="tablist" aria-label="Transition sections">
+      <button class="tab active" role="tab" aria-selected="true"  data-tab="summary">Overview</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="matrix">Decisions <span class="tnum" data-count="matrix"></span></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="partners">Partners <span class="tnum" data-count="partners"></span></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="vendors">Vendors <span class="tnum" data-count="vendors"></span></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="tools">Tools &amp; Tech <span class="tnum" data-count="tools"></span></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="streams">Workstreams <span class="tnum" data-count="streams"></span></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="dash">Dashboards</button>
+    </div>
   </div>
 
   <div class="panels">
 
-    <section class="panel active" id="matrix" role="tabpanel">
+    <!-- ===== OVERVIEW (executive view — loads first) ===== -->
+    <section class="panel active" id="summary" role="tabpanel">
+      <div class="pcard exec">
+        <h3>What needs a decision now</h3>
+        <p class="ptag">The handful of moves that matter most before the Jul 31 deadline. Everything else is detail.</p>
+        <div class="exec-actions" id="exec-actions"></div>
+        <div class="sowhat" id="exec-sowhat"></div>
+      </div>
+
+      <div class="grid2 tight">
+        <div class="pcard">
+          <h3>Where things stand</h3>
+          <p class="ptag">All decision items, by recommendation. Tap a slice to see those items.</p>
+          <div class="donut-wrap">
+            <div class="donut" id="donut-x"></div>
+            <div class="dlegend" id="dlegend-x"></div>
+          </div>
+        </div>
+        <div class="pcard">
+          <h3>What's due when</h3>
+          <p class="ptag">The dates that drive the handoff. Jul 31 is the pressure point.</p>
+          <div class="tl-scroll"><div class="timeline"><div class="tl-line"></div><div class="tl-track" id="tl-track-x"></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DECISIONS (detailed data) ===== -->
+    <section class="panel" id="matrix" role="tabpanel">
+      <div class="detail-banner"><i>Detailed data</i> — the full decision matrix, charts, and planner. The <b>Overview</b> tab has the executive summary.</div>
       <div class="grid2 tight">
         <div class="pcard">
           <h3>Disposition mix</h3>

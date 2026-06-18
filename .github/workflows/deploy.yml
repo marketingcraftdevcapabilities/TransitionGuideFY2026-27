@@ -28,13 +28,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Stamp today's date into the "Updated" line
-        run: |
-          TODAY=$(TZ="America/Los_Angeles" date "+%b %-d, %Y")
-          echo "Stamping updatedDate: $TODAY"
-          # Replace the updatedDate value in data.js with today's date.
-          sed -i -E "s/(updatedDate:[[:space:]]*)\"[^\"]*\"/\1\"${TODAY}\"/" data.js
-          grep -n "updatedDate" data.js || true
+      # Note: the "Updated" date and the roadmap "Today" marker are computed
+      # live in the browser (data.js updatedDate: "auto"), so they always show
+      # the current date without a deploy. No date-stamping step needed here.
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

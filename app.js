@@ -16,6 +16,33 @@
   function money(n){ return n >= 10000 ? '$' + Math.round(n/1000) + 'K' : '$' + Number(n).toLocaleString('en-US'); }
   function plural(n, w){ return n + ' ' + w + (n === 1 ? '' : 's'); }
 
+  // Today's date, computed fresh on every page load — never stale.
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var NOW = new Date();
+  function todayLong(){ return MONTHS[NOW.getMonth()] + ' ' + NOW.getDate() + ', ' + NOW.getFullYear(); }
+  function todayShort(){ return MONTHS[NOW.getMonth()] + ' ' + NOW.getDate(); }
+  function todaySortKey(){
+    var m = NOW.getMonth()+1, d = NOW.getDate();
+    return '' + NOW.getFullYear() + (m<10?'0':'') + m + (d<10?'0':'') + d;
+  }
+  // Resolve a date field that may be the literal "auto".
+  function resolveDate(v){ return (!v || v === 'auto') ? todayLong() : v; }
+  // Parse a "YYYYMMDD" sortKey into a Date (local midnight).
+  function parseKey(k){
+    if(!k || k.length !== 8) return null;
+    return new Date(+k.slice(0,4), +k.slice(4,6)-1, +k.slice(6,8));
+  }
+  // Whole days between today and a sortKey date. Returns a label like
+  // "46 days", "today", or "closed" (past).
+  function daysFromToday(k){
+    var d = parseKey(k); if(!d) return '';
+    var t = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate());
+    var diff = Math.round((d - t) / 86400000);
+    if(diff < 0)  return 'closed';
+    if(diff === 0) return 'today';
+    return diff + (diff === 1 ? ' day' : ' days');
+  }
+
   function badge(status){
     return '<span class="badge '+BADGE[status]+'"><span class="d"></span>'+SLABEL[status]+'</span>';
   }
@@ -43,7 +70,7 @@
     el('h-meta').innerHTML =
       '<span>Prepared by <b>'+esc(m.preparedBy)+'</b> on behalf of <b>'+esc(m.onBehalfOf)+'</b></span>'+
       '<span>For: <b>'+esc(m.preparedFor)+'</b></span>'+
-      '<span>Prepared <b>'+esc(m.preparedDate)+'</b> · Updated <b>'+esc(m.updatedDate)+'</b></span>';
+      '<span>Prepared <b>'+esc(m.preparedDate)+'</b> · Updated <b>'+esc(resolveDate(m.updatedDate))+'</b></span>';
     document.title = m.title + ' · ' + m.team;
 
     // Fill the {{tokens}} in the headline from the live matrix so the
@@ -52,13 +79,21 @@
     DATA.matrix.forEach(function(r){ hc[r.status]++; });
     var hRecover = DATA.matrix.filter(function(r){ return r.status==='stop' && r.budget; })
                               .reduce(function(a,r){ return a + r.budget; }, 0);
-    el('hero-text').innerHTML = DATA.summary.headline
-      .replace('{{count}}',   DATA.matrix.length)
-      .replace('{{tbd}}',     hc.tbd)
-      .replace('{{stop}}',    hc.stop)
-      .replace('{{go}}',      hc.go)
-      .replace('{{done}}',    hc.done)
-      .replace('{{recover}}', money(hRecover));
+    // Days until the Jul 31, 2026 cliff, computed from today — evergreen.
+    var cliffDays = daysFromToday('20260731');
+    var cliffPhrase = (cliffDays === 'closed') ? 'now past' :
+                      (cliffDays === 'today')  ? 'due today' : (cliffDays + ' out');
+    function fillTokens(str){
+      return str
+        .replace('{{count}}',     DATA.matrix.length)
+        .replace('{{tbd}}',       hc.tbd)
+        .replace('{{stop}}',      hc.stop)
+        .replace('{{go}}',        hc.go)
+        .replace('{{done}}',      hc.done)
+        .replace('{{recover}}',   money(hRecover))
+        .replace('{{cliffdays}}', cliffPhrase);
+    }
+    el('hero-text').innerHTML = fillTokens(DATA.summary.headline);
 
     var rs = el('resource-strip');
     DATA.summary.resources.forEach(function(r){
@@ -73,11 +108,11 @@
     el('open-action').innerHTML = '<b>Open action across the board:</b> ' + esc(DATA.summary.openAction);
 
     el('insights').innerHTML = DATA.summary.insights.map(function(i){
-      return '<div class="callout '+i.status+'"><b>'+esc(i.title)+'</b> '+fixLinks(i.body)+'</div>';
+      return '<div class="callout '+i.status+'"><b>'+fillTokens(esc(i.title))+'</b> '+fixLinks(i.body)+'</div>';
     }).join('');
 
     el('footer-text').innerHTML =
-      '<b>'+esc(m.team)+'</b> — '+esc(m.title)+' · Confidential — Internal · Prepared '+esc(m.preparedDate)+' · Source last updated '+esc(m.updatedDate)+'.<br>'+
+      '<b>'+esc(m.team)+'</b> — '+esc(m.title)+' · Confidential — Internal · Prepared '+esc(m.preparedDate)+' · Source last updated '+esc(resolveDate(m.updatedDate))+'.<br>'+
       'Mirrors the Transition Guide source document with all original links preserved. Prepared by '+esc(m.preparedBy)+' on behalf of '+esc(m.onBehalfOf)+' for the '+esc(m.preparedFor)+'.';
   }
 
@@ -109,7 +144,10 @@
   }
 
   /* ---------- Donut + legend (computed) ---------- */
-  function renderDonut(){
+  // Renders into donutId + legendId; both the Overview and Decisions tabs use it.
+  function renderDonut(donutId, legendId){
+    var donutEl = el(donutId), legendEl = el(legendId);
+    if(!donutEl || !legendEl) return;
     var rows = DATA.matrix, n = rows.length;
     var order = ['stop','tbd','go','done'];
     var color = { stop:'#FF5C37', tbd:'#F9C741', go:'#3BD85E', done:'#236CFF' };
@@ -124,7 +162,7 @@
       segs += '<circle class="seg" data-status="'+s+'" cx="110" cy="110" r="80" stroke="'+color[s]+'" stroke-dasharray="'+len+' '+gap+'" stroke-dashoffset="'+(-offset).toFixed(1)+'"></circle>';
       offset += parseFloat(len);
     });
-    el('donut').innerHTML =
+    donutEl.innerHTML =
       '<svg viewBox="0 0 220 220" role="img" aria-label="Disposition donut">'+
         '<circle cx="110" cy="110" r="80" fill="none" stroke="#EDF1F6" stroke-width="28"></circle>'+
         '<g transform="rotate(-90 110 110)" fill="none" stroke-width="28">'+segs+'</g>'+
@@ -132,7 +170,7 @@
         '<text x="110" y="128" text-anchor="middle" font-size="13" fill="#647389" font-weight="600">items</text>'+
       '</svg>';
 
-    el('dlegend').innerHTML = order.map(function(s){
+    legendEl.innerHTML = order.map(function(s){
       return '<div class="row" data-status="'+s+'"><span class="sw '+s+'"></span>'+
         '<span class="nm">'+SLABEL[s]+(s==='tbd'?' after transition':'')+'</span>'+
         '<span class="ct">'+cnt[s]+'</span><span class="pc">'+Math.round(cnt[s]/n*100)+'%</span></div>';
@@ -171,8 +209,9 @@
 
   /* ---------- Timeline ---------- */
   var DUELABEL = {};
-  function renderTimeline(){
-    var track = el('tl-track');
+  function renderTimeline(trackId){
+    var track = el(trackId);
+    if(!track) return;
     var colorFor = function(item){
       if(/stop/i.test(item)) return ['var(--stop)','var(--stop-text)'];
       if(/renew|continue|completed/i.test(item)) return ['var(--go)','var(--go-text)'];
@@ -180,22 +219,34 @@
       return ['var(--tbd)','var(--tbd-text)'];
     };
     DATA.timeline.forEach(function(stop){
-      var cls = 'tl-stop' + (stop.label ? ' '+stop.label : '');
+      // The "now" marker uses live values so it always reads today's date.
+      var dateText = stop.date === 'TODAY' ? (todayShort() + ' · Today') : stop.date;
+      var sortKey  = stop.sortKey === 'TODAY' ? todaySortKey() : stop.sortKey;
+      // Visual state: keep the authored label for now/cliff/soon, but if a dated
+      // stop has already passed, fall back to the muted "past" styling.
+      var label = stop.label;
+      if(label !== 'now' && daysFromToday(sortKey) === 'closed') label = 'past';
+      var cls = 'tl-stop' + (label ? ' '+label : '');
       var items = (stop.items||[]).map(function(it){
         var c = colorFor(it);
         if(/completed/i.test(it)) c = ['var(--done)','var(--done-text)'];
         return '<span class="tl-chip" style="border-color:'+c[0]+';color:'+c[1]+'"><span class="d" style="background:'+c[0]+'"></span>'+esc(it)+'</span>';
       }).join('');
-      var days = stop.label==='now' ? 'now' : (stop.label==='past' ? 'closed' : (stop.days || ''));
+      // Day-count is computed from today so it never goes stale. A stop in the
+      // past reads "closed"; the now-marker reads "now"; future stops show
+      // "N days" counting from today.
+      var days;
+      if(stop.label === 'now'){ days = 'now'; }
+      else { days = daysFromToday(sortKey); }
       var div = document.createElement('div');
       div.className = cls;
       div.innerHTML = '<div class="tl-items">'+items+'</div><span class="tl-dot"></span>'+
-        '<span class="tl-date">'+esc(stop.date)+'</span><span class="tl-meta">'+esc(stop.meta||'')+'</span>'+
+        '<span class="tl-date">'+esc(dateText)+'</span><span class="tl-meta">'+esc(stop.meta||'')+'</span>'+
         (days ? '<span class="tl-days">'+esc(days)+'</span>' : '');
       track.appendChild(div);
       // map short date label -> due sortKey for click-filtering
-      var shortLabel = stop.date.split('·')[0].trim();
-      if(stop.sortKey) DUELABEL[stop.sortKey] = shortLabel;
+      var shortLabel = dateText.split('·')[0].trim();
+      if(sortKey) DUELABEL[sortKey] = shortLabel;
     });
   }
 
@@ -324,7 +375,7 @@
     var panels = [].slice.call(document.querySelectorAll('.panel'));
     var valid = tabs.map(function(t){ return t.getAttribute('data-tab'); });
     function activate(id, focus, push){
-      if(valid.indexOf(id) < 0) id = 'matrix';
+      if(valid.indexOf(id) < 0) id = 'summary';
       tabs.forEach(function(t){
         var on = t.getAttribute('data-tab') === id;
         t.classList.toggle('active', on);
@@ -421,8 +472,10 @@
       inView++;
       var b = parseFloat(r.children[3].getAttribute('data-sort')); if(!isNaN(b) && b > 0) value += b;
       if(r.getAttribute('data-status') === 'tbd') tbd++;
+      // "Cliff" = anything still open and due between today and the Jul 31 deadline.
       var d = parseInt(r.children[4].getAttribute('data-sort'), 10);
-      if(!isNaN(d) && d >= 20260615 && d <= 20260731) cliff++;
+      var todayKey = parseInt(todaySortKey(), 10);
+      if(!isNaN(d) && d >= todayKey && d <= 20260731) cliff++;
     });
     setTxt('ms-count', inView);
     setTxt('ms-count-s', 'of ' + mRows.length + ' items');
@@ -659,13 +712,76 @@
     });
   }
 
+  /* ---------- Executive action list (Overview tab) ---------- */
+  function renderExec(){
+    var host = el('exec-actions'); if(!host) return;
+    // Surface the decisions that matter most: every Stop (money back) and every
+    // partner TBD (a real decision the CMO owns), ordered by urgency then dollars.
+    var picks = DATA.matrix.filter(function(r){
+      return r.status === 'stop' || (r.status === 'tbd' && r.cat === 'partner');
+    });
+    // Sort: soonest due first (no-date last), then largest dollars.
+    picks.sort(function(a,b){
+      var ad = a.due || '99999999', bd = b.due || '99999999';
+      if(ad !== bd) return ad < bd ? -1 : 1;
+      return (b.budget||0) - (a.budget||0);
+    });
+    var ICON = { stop:'✕', go:'✓', tbd:'?' };
+    var VERB = { stop:'Wind down', tbd:'Decide on', go:'Continue' };
+    host.innerHTML = picks.map(function(r){
+      var amt = r.budget ? ' <span class="ea-amt">'+(r.status==='stop'?'→ recover ':'')+money(r.budget)+'</span>' : '';
+      var due = r.due ? ('Due ' + DUEFMT(r.due) + ' · ' + daysFromTodayPhrase(r.due)) : 'No fixed deadline';
+      // Strip any inline links from the action for a clean exec sentence.
+      var desc = String(r.action).replace(/<[^>]+>/g, '');
+      return '<div class="exec-act '+r.status+'">'+
+        '<div class="ea-icon">'+ICON[r.status]+'</div>'+
+        '<div class="ea-body">'+
+          '<div class="ea-title">'+VERB[r.status]+' '+esc(r.item)+amt+'</div>'+
+          '<div class="ea-desc">'+esc(desc)+'</div>'+
+          '<div class="ea-meta">'+esc(due)+'</div>'+
+        '</div></div>';
+    }).join('');
+
+    var stopSum = picks.filter(function(r){ return r.status==='stop' && r.budget; })
+                       .reduce(function(a,r){ return a+r.budget; }, 0);
+    var tbdN = picks.filter(function(r){ return r.status==='tbd'; }).length;
+    el('exec-sowhat').innerHTML = '<b>Bottom line:</b> stopping the non-renewals recovers about <b>'+
+      money(stopSum)+'</b> a year, and <b>'+tbdN+'</b> partner '+(tbdN===1?'decision':'decisions')+
+      ' need a yes/no before the deadlines above. Naming owners for each is the first move.';
+  }
+  function daysFromTodayPhrase(key){
+    var d = daysFromToday(key);
+    if(d === 'closed') return 'now past';
+    if(d === 'today')  return 'today';
+    return d + ' out';
+  }
+
+  /* ---------- Tab count badges ---------- */
+  function renderTabCounts(){
+    var counts = {
+      matrix:   DATA.matrix.length,
+      partners: DATA.partners.length,
+      vendors:  DATA.vendors.length,
+      tools:    DATA.tools.length,
+      streams:  DATA.workstreams.length,
+    };
+    document.querySelectorAll('.tnum[data-count]').forEach(function(b){
+      var k = b.getAttribute('data-count');
+      if(counts[k] != null) b.textContent = counts[k];
+    });
+  }
+
   /* ---------- boot ---------- */
   function init(){
     renderHeader();
     renderKPIs();
-    renderDonut();
+    renderTabCounts();
+    renderExec();
+    renderDonut('donut', 'dlegend');       // Decisions tab
+    renderDonut('donut-x', 'dlegend-x');   // Overview tab
     renderXtab();
-    renderTimeline();
+    renderTimeline('tl-track');            // Decisions tab
+    renderTimeline('tl-track-x');          // Overview tab
     renderMatrix();
     renderPartners();
     renderVendors();

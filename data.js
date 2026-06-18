@@ -12,9 +12,9 @@ const DATA = {
     onBehalfOf:  "Mos Okediji",
     preparedFor: "Chief Marketing Officer",
     preparedDate:"Jun 4, 2026",
-    // "updatedDate" is auto-stamped by GitHub Actions on each push.
-    // To override locally, set it here: "Jun 16, 2026"
-    updatedDate: "Jun 15, 2026",
+    // "updatedDate" is computed live in the browser (always today's date).
+    // Leave as "auto" for that behavior, or hardcode a date like "Jun 16, 2026" to pin it.
+    updatedDate: "auto",
     confidential: true,
   },
 
@@ -24,7 +24,7 @@ const DATA = {
     headline: `<b>{{count}} decisions</b> sit in the matrix — <b class="warn">{{tbd}} still TBD</b>,
       <b>{{stop}} to stop</b>, {{go}} to continue, {{done}} closing out. Non-renewals of
       <b>LinkedIn &amp; Reforge</b> recover roughly <b class="go">{{recover}}</b> a year.
-      Three partner contracts land on <b class="warn">Jul 31, 2026 — 46 days out</b>. The critical path isn't money:
+      Three partner contracts land on <b class="warn">Jul 31, 2026 — {{cliffdays}}</b>. The critical path isn't money:
       <b>every Run-the-Business workstream is currently unassigned</b>, and several admin
       seats sit with people who have left.`,
     resources: [
@@ -43,7 +43,7 @@ const DATA = {
     insights: [
       { status: "tbd",  title: "Ownership is the critical path.", body: "Every Run-the-Business workstream is unassigned (“TBD, finding”). Naming owners gates almost every other action in this guide." },
       { status: "stop", title: "Two clean non-renewals recover ~$133K.", body: "LinkedIn (200 seats, 25 active) and Reforge (100 seats, ~80% dormant). Communicate the wind-down and migrate any active users." },
-      { status: "tbd",  title: "Deadline cliff on Jul 31, 2026 — 46 days out.", body: "Three partner contracts converge: renew ANA, finalize the Reforge wind-down (comms before the 31st), and decide The Work / WARC." },
+      { status: "tbd",  title: "Deadline cliff on Jul 31, 2026 — {{cliffdays}}.", body: "Three partner contracts converge: renew ANA, finalize the Reforge wind-down (comms before the 31st), and decide The Work / WARC." },
       { status: "go",   title: "Two clear keeps.", body: "ANA (22-year partner, unlimited seats for all of Intuit) and Google Workspace (core infrastructure). Continue as-is and transition access." },
       { status: "stop", title: "Access risk from departures.", body: "Admin seats are held by people who have left — Sylvia Luong, Emily Valencia, Paulina. Re-establish Intuit admins before access lapses." },
       { status: "done", title: "Closing out clean.", body: "BW Events and Bright Idea Sparks delivered their work; reconcile the final invoices and close the open POs." },
@@ -81,7 +81,7 @@ const DATA = {
   timeline: [
     { date: "Apr 30", sortKey: "20260430", label: "past",  items: ["BW Events · completed", "Docebo · TBD"],         meta: "POs closing · migration done" },
     { date: "May 29", sortKey: "20260529", label: "past",  items: ["Bright Idea Sparks · completed"],                meta: "Session 2 in payment" },
-    { date: "Jun 15 · Today", sortKey: "20260615", label: "now", items: [],                                         meta: "Source last updated" },
+    { date: "TODAY", sortKey: "TODAY", label: "now", items: [],                                                       meta: "Source last updated" },
     { date: "Jul 31", sortKey: "20260731", label: "cliff", items: ["ANA · renew", "Reforge · stop", "The Work · decide"], meta: "The cliff — 3 contracts", days: "46 days" },
     { date: "Aug 16", sortKey: "20260816", label: "soon",  items: ["LinkedIn · stop"],                               meta: "Non-renewal comms", days: "62 days" },
     { date: "Oct 31", sortKey: "20261031", label: "",      items: ["MTM · right to refuse"],                        meta: "Decision deadline", days: "138 days" },
