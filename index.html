@@ -92,25 +92,20 @@
   .kpi .num.small{font-size:clamp(30px,3.6vw,42px)}
   .kpi .sub{font-size:13px;color:var(--muted);margin-top:8px}
   .chip{display:inline-block;font-family:var(--mono);font-size:11.5px;background:var(--wintermint);color:var(--ink);padding:4px 9px;border-radius:6px;margin-top:12px;border:1px solid var(--line)}
-  /* Interactive disposition bar: segments show counts and are tappable */
-  .ministack{display:flex;height:22px;border-radius:6px;overflow:hidden;margin-top:14px;background:var(--line)}
-  .mseg{appearance:none;border:none;cursor:pointer;height:100%;padding:0;min-width:22px;
-    display:flex;align-items:center;justify-content:center;transition:filter .12s, transform .12s;position:relative}
+  /* Disposition bar: clean colors by default; count reveals on hover/tap */
+  .ministack{display:flex;height:20px;border-radius:6px;overflow:hidden;margin-top:14px;background:var(--line)}
+  .mseg{appearance:none;border:none;cursor:pointer;height:100%;padding:0;min-width:18px;
+    display:flex;align-items:center;justify-content:center;position:relative;
+    transition:filter .12s, flex-grow .18s}
   .mseg:hover{filter:brightness(1.06)}
   .mseg:focus-visible{outline:2px solid var(--blueberry);outline-offset:-2px}
+  /* number hidden until hover / tap (.show) / keyboard focus */
   .mseg-n{font-size:12px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;
-    text-shadow:0 1px 1px rgba(0,0,0,.18)}
-  /* TBD segment is light — use dark text for contrast */
+    text-shadow:0 1px 1px rgba(0,0,0,.18);opacity:0;transition:opacity .12s}
+  .mseg:hover .mseg-n,.mseg.show .mseg-n,.mseg:focus-visible .mseg-n{opacity:1}
+  /* a revealed thin segment grows just enough to fit its number */
+  .mseg:hover,.mseg.show,.mseg:focus-visible{min-width:30px}
   .mseg[data-status="tbd"] .mseg-n{color:var(--tbd-text);text-shadow:none}
-  /* Numeric key row beneath the bar — always readable, even for thin segments */
-  .mkeys{display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:11px}
-  .mkey{appearance:none;border:none;background:none;cursor:pointer;padding:2px 2px;
-    display:inline-flex;align-items:center;gap:5px;font-family:inherit;border-radius:6px}
-  .mkey:hover .mkey-l{color:var(--ink)}
-  .mkey:focus-visible{outline:2px solid var(--super-blue);outline-offset:2px}
-  .mkey-sw{width:9px;height:9px;border-radius:2px;flex:0 0 auto}
-  .mkey-n{font-size:13px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
-  .mkey-l{font-size:12px;color:var(--muted)}
 
   .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:46px 2px 18px;flex-wrap:wrap}
   .sec-head h2{font-size:22px;font-weight:700;color:var(--ink);margin:0;letter-spacing:-.01em}

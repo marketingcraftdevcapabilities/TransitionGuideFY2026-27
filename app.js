@@ -130,9 +130,8 @@
     var streams = DATA.workstreams.length;
     function pct(c){ return (c/n*100).toFixed(1); }
 
-    // Interactive disposition bar: each segment shows its COUNT and filters the
-    // matrix when clicked. A numeric chip-row sits below so thin segments are
-    // still readable on every screen size.
+    // Disposition bar: clean colored segments by default. The count reveals on
+    // hover (desktop) or tap (mobile) — tapping also filters the Decisions list.
     var SEG = [
       { k:'stop', label:'Stop',     col:'var(--stop)' },
       { k:'tbd',  label:'TBD',      col:'var(--tbd)'  },
@@ -142,19 +141,13 @@
     var ministack = SEG.map(function(s){
       if(cnt[s.k] === 0) return '';
       return '<button class="mseg" data-status="'+s.k+'" style="width:'+pct(cnt[s.k])+'%;background:'+s.col+'" '+
-        'title="'+cnt[s.k]+' '+s.label+' — tap to view" aria-label="'+cnt[s.k]+' '+s.label+'">'+
+        'title="'+cnt[s.k]+' '+s.label+'" aria-label="'+cnt[s.k]+' '+s.label+' — tap to view">'+
         '<span class="mseg-n">'+cnt[s.k]+'</span></button>';
-    }).join('');
-    var miniKeys = SEG.map(function(s){
-      return '<button class="mkey" data-status="'+s.k+'" title="View '+s.label+' items">'+
-        '<span class="mkey-sw" style="background:'+s.col+'"></span>'+
-        '<span class="mkey-n">'+cnt[s.k]+'</span><span class="mkey-l">'+s.label+'</span></button>';
     }).join('');
     el('kpi-grid').innerHTML =
       '<div class="kpi"><div class="label">Decision items</div><div class="num">'+n+'</div>'+
         '<div class="sub">Partners, vendors &amp; tools under review</div>'+
-        '<div class="ministack" role="group" aria-label="Decision items by status">'+ministack+'</div>'+
-        '<div class="mkeys">'+miniKeys+'</div></div>'+
+        '<div class="ministack" role="group" aria-label="Decision items by status — tap a segment">'+ministack+'</div></div>'+
       '<div class="kpi"><div class="label">Decisions pending</div><div class="num">'+cnt.tbd+'</div>'+
         '<div class="sub">Items marked TBD after transition</div><div class="chip">'+(cnt.tbd>=n/2?'half of the matrix':'open decisions')+'</div></div>'+
       '<div class="kpi"><div class="label">Annual spend to wind down</div><div class="num small">'+money(stopRecover)+'</div>'+
@@ -621,8 +614,20 @@
     if(mReset) mReset.addEventListener('click', function(){ mState = { status:'all', cat:'all', q:'', due:null }; if(mSearch) mSearch.value=''; applyMatrix(); });
 
     // KPI disposition bar (segments + numeric keys) → jump to the matrix, filtered.
-    document.querySelectorAll('.ministack .mseg, .mkeys .mkey').forEach(function(e){
-      e.addEventListener('click', function(){ focusMatrix(e.getAttribute('data-status'), 'all'); });
+    // Disposition bar segments: clean by default. On touch (no hover), the first
+    // tap reveals the count; a second tap navigates. On desktop the count is
+    // already shown via :hover, so the click navigates immediately.
+    var segEls = [].slice.call(document.querySelectorAll('.ministack .mseg'));
+    var canHover = !(window.matchMedia && window.matchMedia('(hover: none)').matches);
+    segEls.forEach(function(e){
+      e.addEventListener('click', function(){
+        if(!canHover && !e.classList.contains('show')){
+          segEls.forEach(function(o){ o.classList.remove('show'); });
+          e.classList.add('show');   // first tap: just reveal the number
+          return;
+        }
+        focusMatrix(e.getAttribute('data-status'), 'all');
+      });
     });
 
     // Decisions-tab donut/legend → jump to the matrix and filter it.
