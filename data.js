@@ -64,7 +64,7 @@ const DATA = {
     { item: "MTM",                          cat: "partner", status: "tbd",  budget: 25000,  due: "20261231", action: "Decide next steps; right to refuse by Oct 31. Reach out to the partner." },
     { item: "BW Events",                    cat: "vendor",  status: "done", budget: 113225, due: "20260430", action: "Make changes on the <a href='https://growyourcraft.intuit.com/craft/home?i=X-KxbAEreg8pd7030IivDk_8XlizTR76#search'>Craft website</a>; close out completed POs." },
     { item: "Bright Idea Sparks · Ikezi Kamanu", cat: "vendor", status: "done", budget: 48763, due: "20260529", action: "No actions beyond closeout; session 2 in payment, work completed." },
-    { item: "Electric Thinking Co.",        cat: "vendor",  status: "tbd",  budget: 28000,  due: null,       action: "WoW_D4D Skills MVP via Magnit. Request came in 06/15 — WIP. No PO; scheduled through Magnit." },
+    { item: "Electric Thinking Co.",        cat: "vendor",  status: "done", budget: 28000,  due: null,       action: "WoW_D4D Skills MVP via Magnit. Approved — work completed. No PO; scheduled through Magnit." },
     { item: "Sendoso",                      cat: "tool",    status: "tbd",  budget: 10200,  due: null,       action: "Intuit-wide gifting + inventory. Transfer inventory to a new/existing group." },
     { item: "Splash / Cvent",               cat: "tool",    status: "stop", budget: null,   due: null,       action: "Terminate the partnership; remove departed licenses." },
     { item: "Swoogo",                       cat: "tool",    status: "tbd",  budget: null,   due: null,       action: "Decide the future of the Craft website (hosted here). Invite new owners or freeze." },
@@ -196,7 +196,7 @@ const DATA = {
     {
       name: "Electric Thinking Co.",
       subtitle: "via Magnit",
-      status: "tbd",
+      status: "done",
       poValue: "$28,000 · no PO",
       poSort: 28000,
       workstream: "WoW_D4D Skills MVP.",
@@ -204,7 +204,7 @@ const DATA = {
         { name: "Kenny White", role: "2645 San Benito Dr, Walnut Creek, CA 94598", phone: "+1 415 378 2263", email: "kenny@electricthinking.ai" },
         { name: "Jenn Haugh",  role: "Working through Intuit CW via Magnit", email: "Jenn_Haugh@intuit.com" },
       ],
-      nextStep: "Request came in on 06/15 — WIP. No PO; all work was scheduled through Magnit.",
+      nextStep: "Approved — work completed. No PO; all work was scheduled through Magnit.",
       links: [
         { label: "Google folder", url: "https://drive.google.com/drive/folders/1lPVQrY3kE_5DNb-E3NXLCSVXOphoEoPb?usp=drive_link" },
       ],
